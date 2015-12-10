@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
-public class Global : MonoBehaviour{
+public class Global : MonoBehaviour {
 
     public static Global instance = null;
 

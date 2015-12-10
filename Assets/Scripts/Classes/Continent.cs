@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Continent : MonoBehaviour {
 
+    public float posX;
+    public float posY; // Coorodonées de la caméra zoomée
+    public float posZoom;
+
     public Indicator pop;
     public Indicator foodNeed;
     public Indicator foodProd;
@@ -36,14 +40,20 @@ public class Continent : MonoBehaviour {
 
     void OnMouseEnter()
     {
-        Vector3 temp = new Vector3(0, 0, -2);
-        transform.position += temp;
+        if (GameManager.instance.isZoomed == false)
+        {
+            Vector3 temp = new Vector3(0, 0, -120);
+            transform.position += temp;
+        }
     }
 
     void OnMouseExit()
     {
-        Vector3 temp = new Vector3(0, 0, 2);
-        transform.position += temp;
+        if (GameManager.instance.isZoomed == false)
+        {
+            Vector3 temp = new Vector3(0, 0, 120);
+            transform.position += temp;
+        }
     }
 
 
@@ -51,6 +61,19 @@ public class Continent : MonoBehaviour {
     {
         foodProd.UpdateValue();
         GameManager.instance.nextTurn();
+       
+
+        if (GameManager.instance.isZoomFinished && !GameManager.instance.isZoomed)
+        {
+            GameManager.instance.continentSelected = this;
+            GameManager.instance.isZoomed = !GameManager.instance.isZoomed;
+            GameManager.instance.isZoomFinished = false;
+
+            Vector3 temp = new Vector3(0, 0, 120);
+            transform.position += temp;
+        }
+        
+
     }
 
 

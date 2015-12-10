@@ -39,14 +39,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90afe61d6bcc35349af06b95d092f983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodText: {fileID: 0}
+  isZoomed: 0
+  isZoomFinished: 1
+  LockedZoom: 8596.97852
+  LockedX: 0
+  LockedY: 0
+  smooth: 2
+  continentSelected: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: LockedZoom
+      value: 8596.97852
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: smooth
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 120490}
