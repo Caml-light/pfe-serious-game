@@ -20,15 +20,25 @@ public class GameManager : MonoBehaviour {
     private float delta = 0;
     public float smooth = 2;
 
-    public Continent continentSelected;
+    private Continent continentSelected;
 
 
     private Text foodUS;
     private Text foodEU;
     private Text foodGlobal;
-    
 
+    public Continent ContinentSelected
+    {
+        get
+        {
+            return continentSelected;
+        }
 
+        set
+        {
+            continentSelected = value;
+        }
+    }
 
     void Awake()
     {
@@ -40,7 +50,9 @@ public class GameManager : MonoBehaviour {
 
         void Start () {
         foodUS = GameObject.Find("FoodUS").GetComponent<Text>();
+        foodUS.enabled = false;
         foodEU = GameObject.Find("FoodEurope").GetComponent<Text>();
+        foodEU.enabled = false;
         foodGlobal = GameObject.Find("FoodGlobal").GetComponent<Text>();
 
     }
@@ -58,29 +70,34 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         if (Input.GetKey(KeyCode.Escape) && isZoomFinished && isZoomed)
         {
             isZoomed = !isZoomed;
             isZoomFinished = false;
+            HideContinentIndicators();
             continentSelected = null;
         }
 
         if (isZoomed && !isZoomFinished)
         {
-            ZoomInToContinent();
+            ZoomInContinent();
 
         }
         else if (!isZoomed && !isZoomFinished)
         {
-            ZoomOutFromContinent();
+            ZoomOutContinent();
         }
     }
 
+       
 
-
-    void ZoomInToContinent()
+    void ZoomInContinent() // description de la fonction demandé.
     {
+        //est - ce qu'il est possible de ne faire qu'un seul appelle à cette fonction, parce que la, c'est quand mme 31 appelles, c'est beaucoup.
+        Debug.Log("ZoomInContinent()");
         delta += smooth * Time.deltaTime;
+        DisplayContinentIndicators();
 
 
         //Cam size
@@ -103,9 +120,11 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    void ZoomOutFromContinent()
-    {
 
+
+    void ZoomOutContinent()
+    {// est-ce qu'il est possible de ne faire qu'un seul appelle à cette fonction, parce que la, c'est quand mme 31 appelles, c'est beaucoup.
+        Debug.Log("ZoomOutContinent()");
         delta += smooth * Time.deltaTime;
 
         //Cam size
@@ -126,5 +145,47 @@ public class GameManager : MonoBehaviour {
             delta = 0;
         }
 
+    }
+
+    void DisplayContinentIndicators() // call when clicking on a continent, display indicators for the continent clicked
+    {
+        Debug.LogFormat("DisplayContinentIndicators : Display indicators for {0}", ContinentSelected.Name);
+
+        switch (ContinentSelected.Name)
+        {
+            case "Europe":
+                foodEU.enabled = true;
+                break;
+
+            case "Amérique du Nord":
+                foodUS.enabled = true;
+                break;
+
+            default:
+                foodGlobal.enabled = true;
+
+                break;
+        }
+    }
+
+    void HideContinentIndicators() // call when exiting a continent, hide indicators of the current zoomed continent.
+    {
+
+        Debug.LogFormat("HideContinentIndicators : Hide indicators for {0}", ContinentSelected.Name);
+        switch (ContinentSelected.Name)
+        {
+            case "Europe":
+                foodEU.enabled = false;
+
+                break;
+
+            case "Amérique du Nord":
+                foodUS.enabled = false;
+                break;
+
+            default:
+
+                break;
+        }
     }
 }

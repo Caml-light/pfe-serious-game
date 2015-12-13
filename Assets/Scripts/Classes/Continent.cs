@@ -6,7 +6,7 @@ public class Continent : MonoBehaviour {
     public float posX;
     public float posY; // Coorodonées de la caméra zoomée
     public float posZoom;
-
+        
     public Indicator pop;
     public Indicator foodNeed;
     public Indicator foodProd;
@@ -56,16 +56,16 @@ public class Continent : MonoBehaviour {
         }
     }
 
-
     void OnMouseDown()
     {
+        Debug.LogFormat("OnMouseDown on {0}", Name);
         foodProd.UpdateValue();
         GameManager.instance.nextTurn();
        
 
         if (GameManager.instance.isZoomFinished && !GameManager.instance.isZoomed)
         {
-            GameManager.instance.continentSelected = this;
+            GameManager.instance.ContinentSelected = this;
             GameManager.instance.isZoomed = !GameManager.instance.isZoomed;
             GameManager.instance.isZoomFinished = false;
 
