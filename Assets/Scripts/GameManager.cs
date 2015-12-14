@@ -10,24 +10,24 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
     Camera cam = Camera.main;
-    public bool isZoomed = false;
+    public bool isZoomed = false; // Sommes-nous en vue globale ou en vue zoomée sur un continent ?
     public bool isZoomFinished = true; // l'annimation est-elle terminée ?
 
-    public float LockedZoom = 8596.979f;
-    public float LockedX = 0f;
+    public float LockedZoom = 8596.979f;  
+    public float LockedX = 0f;            /* Les coordonées de la caméra en vue globale */
     public float LockedY = 0f;
 
-    private float delta = 0;
-    public float smooth = 2;
+    private float delta = 0; // Permet de faire une transition
+    public float smooth = 2; // Permet de géré la rapidité du zoom, modifiable via l'interface de Unity
 
-    private Continent continentSelected;
+    private Continent continentSelected; // Le continent séléctionné par le joueur. Null quand on est en vue globale
 
 
     private Text foodUS;
     private Text foodEU;
     private Text foodGlobal;
 
-    public Continent ContinentSelected
+    public Continent ContinentSelected // Propriétés du continent séléctionné
     {
         get
         {
@@ -71,70 +71,63 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKey(KeyCode.Escape) && isZoomFinished && isZoomed)
+        if (Input.GetKey(KeyCode.Escape) && isZoomFinished && isZoomed) // Si l'o appuie sur la touche "Echap", que nous ne sommes pas en pleine annimation et en vue zoomée
         {
-            isZoomed = !isZoomed;
-            isZoomFinished = false;
-            HideContinentIndicators();
-            continentSelected = null;
+            isZoomed = !isZoomed; // On annonce qu'on passe en vue globale
+            isZoomFinished = false; // Que l'annimation commence
+            HideContinentIndicators(); // On cache les indicateurs du contient séléctionné
+            continentSelected = null; // On désélectionne le continent
         }
 
-        if (isZoomed && !isZoomFinished)
+        if (isZoomed && !isZoomFinished) // Si on est en en vue zoomée mais que l'annimation n'est pas fini (donc qu'on est en transition vers une vue zoomée)
         {
-            ZoomInContinent();
+            ZoomInContinent(); // Permet de s'approcher de la position zoomée (appelé environ 33 fois pour une transition)
 
         }
-        else if (!isZoomed && !isZoomFinished)
+        else if (!isZoomed && !isZoomFinished) // Sinon, si on est en transition vers la vue globale
         {
-            ZoomOutContinent();
+            ZoomOutContinent(); // Permet de s'approcher de la position dézoomée (appelé environ 33 fois pour une transition)
         }
     }
 
        
 
-    void ZoomInContinent() // description de la fonction demandé.
+    void ZoomInContinent() // A chaqeu appel, va modifier la position de la caméra pour s'approcher de la position zoomée
     {
-        //est - ce qu'il est possible de ne faire qu'un seul appelle à cette fonction, parce que la, c'est quand mme 31 appelles, c'est beaucoup.
-        Debug.Log("ZoomInContinent()");
-        delta += smooth * Time.deltaTime;
-        DisplayContinentIndicators();
+        delta += smooth * Time.deltaTime; //Défini la distance parcouru
 
+        //Zoom de la caméra
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, continentSelected.posZoom, delta); // On zoom un peu plus en augmentant l'orthographicSize 
 
-        //Cam size
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, continentSelected.posZoom, delta);
-
-        //Cam pos
-
+        //Position de la caméra
         float targetX;
         float targetY;
-        targetX = Mathf.Lerp(cam.transform.position.x, continentSelected.posX, delta);
-        targetY = Mathf.Lerp(cam.transform.position.y, continentSelected.posY, delta);
-        cam.transform.position = new Vector3(targetX, targetY, cam.transform.position.z);
+        targetX = Mathf.Lerp(cam.transform.position.x, continentSelected.posX, delta); // On défini la position X de la caméra à un temps donné
+        targetY = Mathf.Lerp(cam.transform.position.y, continentSelected.posY, delta); // de même pour Y
+        cam.transform.position = new Vector3(targetX, targetY, cam.transform.position.z); // On créé un vecteur de translation avec les cordonées X et Y (on ne touche pas au z, car on est en 2D)
 
 
-        if (cam.orthographicSize == continentSelected.posZoom && cam.transform.position.x == continentSelected.posX && cam.transform.position.y == continentSelected.posY)
+        if (cam.orthographicSize == continentSelected.posZoom && cam.transform.position.x == continentSelected.posX && cam.transform.position.y == continentSelected.posY) // Si la caméra est a la position définie par le continent
         {
-            isZoomFinished = true;
-            delta = 0;
+            isZoomFinished = true; // On annonce que le zoom est fini
+            delta = 0; // On remet l'indicateur de distance parcouru à 0 (pour d'autres transitions)
         }
 
     }
 
 
 
-    void ZoomOutContinent()
-    {// est-ce qu'il est possible de ne faire qu'un seul appelle à cette fonction, parce que la, c'est quand mme 31 appelles, c'est beaucoup.
-        Debug.Log("ZoomOutContinent()");
+    void ZoomOutContinent() // A chaqeu appel, va modifier la position de la caméra pour s'approcher de la position désoomée
+    {
         delta += smooth * Time.deltaTime;
 
-        //Cam size
+        //Zoom de la caméra
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, LockedZoom, delta);
 
-        //Cam pos
-
+        //Position de la caméra
         float targetX;
         float targetY;
-        targetX = Mathf.Lerp(cam.transform.position.x, LockedX, delta);
+        targetX = Mathf.Lerp(cam.transform.position.x, LockedX, delta); /*Idem que ZoomInContinent, sauf qu'ici on se raproche des coordonées de la vue globale */
         targetY = Mathf.Lerp(cam.transform.position.y, LockedY, delta);
         cam.transform.position = new Vector3(targetX, targetY, cam.transform.position.z);
 
@@ -147,7 +140,7 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    void DisplayContinentIndicators() // call when clicking on a continent, display indicators for the continent clicked
+    public void DisplayContinentIndicators() // call when clicking on a continent, display indicators for the continent clicked
     {
         Debug.LogFormat("DisplayContinentIndicators : Display indicators for {0}", ContinentSelected.Name);
 
