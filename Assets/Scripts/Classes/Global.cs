@@ -7,30 +7,31 @@ public class Global : MonoBehaviour {
 
     public static Global instance = null;
 
-    public double pop;
-    public double foodNeed;
-    public double foodProd;
-    public double airQuality;
-    public double earthQuality;
-    public double seaQuality;
-    public double biodiversity;
-
     public Dictionary<string,Continent> continents = new Dictionary<string,Continent>();
+    public Dictionary<string, double> globalIndicators = new Dictionary<string, double>();
 
     void Awake()
     {
         Debug.Log("Global start");
         if (instance == null)
+        {
             instance = this;
+            globalIndicators.Add("pop", 0);
+            globalIndicators.Add("foodNeed", 0);
+            globalIndicators.Add("foodProd", 0);
+            globalIndicators.Add("airQuality", 0);
+            globalIndicators.Add("earthQuality", 0);
+            globalIndicators.Add("seaQuality", 0);
+            globalIndicators.Add("biodiversity", 0);
+        }            
         else if (instance != this)
+        {
             Destroy(gameObject);
+        }
+            
 
         Debug.Log("Global finished");
-    }
-
-
-
-    
+    }    
 
 	// Use this for initialization
 	void Start () {
@@ -44,10 +45,30 @@ public class Global : MonoBehaviour {
 
     public void nextTurn()
     {
-        foodProd = 0;
-        foreach (Continent c in Global.instance.continents.Values)
+        
+    }
+
+    public void UpdateGlobalIndicators()
+    {
+        double indicatorValueBuffer;
+        Indicator indicatorBuffer;
+        bool success = false;
+
+        foreach (string indicatorName in globalIndicators.Keys)
         {
-            foodProd += c.foodProd.Value;
+            indicatorValueBuffer = 0;
+
+            foreach (Continent c in continents.Values)
+            {
+                success = c.indicators.TryGetValue(indicatorName, out indicatorBuffer);
+                if (success)
+                {
+                    indicatorValueBuffer += indicatorBuffer.Value;
+                }
+
+            }
+
+            globalIndicators[indicatorName] = indicatorValueBuffer;
         }
     }
 }

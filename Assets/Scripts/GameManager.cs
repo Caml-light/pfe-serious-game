@@ -54,18 +54,26 @@ public class GameManager : MonoBehaviour {
         foodEU = GameObject.Find("FoodEurope").GetComponent<Text>();
         foodEU.enabled = false;
         foodGlobal = GameObject.Find("FoodGlobal").GetComponent<Text>();
+        UpdateDisplay();
 
     }
 
      public void nextTurn()
     {
+        Debug.Log("nextTurn GM");
         Global.instance.nextTurn();
-
-        foodUS.text = "US : " + Global.instance.continents["Amérique du Nord"].foodProd.Value;
-        foodEU.text = "Europe : " + Global.instance.continents["Europe"].foodProd.Value;
-        foodGlobal.text = "Global : " + Global.instance.foodProd;
+        UpdateDisplay();
 
       
+    }
+
+
+    public void UpdateDisplay()
+    {
+        Debug.Log("UpdateDisplay GM");
+        foodUS.text = "US : " + Global.instance.continents["Amérique du Nord"].indicators["foodProd"].Value;
+        foodEU.text = "Europe : " + Global.instance.continents["Europe"].indicators["foodProd"].Value;
+        foodGlobal.text = "Global : " + Global.instance.globalIndicators["foodProd"];
     }
 	
 	// Update is called once per frame
