@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Classes;
 using System;
 
-public class Indicator {
+public class Indicator : Info
+{
     /// <summary>
     ///     An indicator is defined by its name, its current value, a constant of variation which tends to the equilibrium
     ///     Name, Value, Modifier, Equilibrium
     /// </summary>
-    private string _Name;
-    private double _Value;
-    private double _Constant;    
+
+    private double _Constant;
     private double _Equilibrium;
     private double _Modifier;
 
-    public Indicator(string Name, double Value, double Constant, double Equilibrium, double Modifier)
+    public Indicator(string Name, double Value, double Constant, double Equilibrium, double Modifier) : base (Name, Value)
     {
-        _Name = Name;
-        _Value = Value;
+
         //_Constant = Constant;
         _Constant  = 0.99; // Default value to try. This this the equivalent of 1% of modification / turn
         _Equilibrium = Equilibrium;
@@ -25,32 +25,7 @@ public class Indicator {
         Debug.LogFormat("Indicator (Name, Value, Constant, Equilibrium, Modifier) created :{0}, {1}, {2}, {3}, {4}", _Name, _Value, _Constant, _Equilibrium, _Modifier );
     }
 
-    public string Name
-    {
-        get
-        {
-            return _Name;
-        }
-
-        //The name should not be modify after the initialization
-        //set 
-        //{
-        //    _Name = value;
-        //}
-    }
-
-    public double Value
-    {
-        get
-        {
-            return _Value;
-        }
-
-        set
-        {
-            _Value = value;
-        }
-    }
+   
 
     public double Modifier
     {

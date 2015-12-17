@@ -15,7 +15,7 @@ public class Continent : MonoBehaviour {
     {
         indicators.Add("pop", pop);
         indicators.Add("foodNeed", foodNeed);
-        indicators.Add("oodProd", foodProd);
+        indicators.Add("foodProd", foodProd);
         indicators.Add("airQuality", airQuality);
         indicators.Add("earthQuality", earthQuality);
         indicators.Add("seaQuality", seaQuality);
@@ -60,7 +60,7 @@ public class Continent : MonoBehaviour {
                 transform.position += temp;
             }
 
-            GameManager.instance.DisplayContinentIndicators(); // On affiche les indicateurs
+            GameManager.instance.EnableContinentIndicators(); // On affiche les indicateurs
 
             //INSTUCTIONS lors d'un clic sur le continent ici....
 

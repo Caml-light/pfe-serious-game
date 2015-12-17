@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour {
     }
 
         void Start () {
+
+        Debug.Log("GM start");
         foodUS = GameObject.Find("FoodUS").GetComponent<Text>();
         foodUS.enabled = false;
         foodEU = GameObject.Find("FoodEurope").GetComponent<Text>();
@@ -70,20 +72,20 @@ public class GameManager : MonoBehaviour {
 
     public void UpdateDisplay()
     {
-        Debug.Log("UpdateDisplay GM");
-        foodUS.text = "US : " + Global.instance.continents["Amérique du Nord"].indicators["foodProd"].Value;
-        foodEU.text = "Europe : " + Global.instance.continents["Europe"].indicators["foodProd"].Value;
-        foodGlobal.text = "Global : " + Global.instance.globalIndicators["foodProd"];
+        Debug.Log("UpdateDisplay GM");        
+        foodEU.text = "Europe : "  + Global.instance.continents["Europe"].indicators["foodProd"].Value.ToString();
+        foodUS.text = "NA : " + Global.instance.continents["Amérique du Nord"].indicators["foodProd"].Value.ToString();
+        foodGlobal.text = "Global : " + Global.instance.globalIndicators["foodProd"].Value.ToString();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
         if (Input.GetKey(KeyCode.Escape) && isZoomFinished && isZoomed) // Si l'o appuie sur la touche "Echap", que nous ne sommes pas en pleine annimation et en vue zoomée
         {
             isZoomed = !isZoomed; // On annonce qu'on passe en vue globale
             isZoomFinished = false; // Que l'annimation commence
-            HideContinentIndicators(); // On cache les indicateurs du contient séléctionné
+            DesabledContinentIndicators(); // On cache les indicateurs du contient séléctionné
             continentSelected = null; // On désélectionne le continent
         }
 
@@ -148,7 +150,7 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    public void DisplayContinentIndicators() // call when clicking on a continent, display indicators for the continent clicked
+    public void EnableContinentIndicators() // call when clicking on a continent, display indicators for the continent clicked
     {
         Debug.LogFormat("DisplayContinentIndicators : Display indicators for {0}", ContinentSelected.Name);
 
@@ -169,7 +171,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void HideContinentIndicators() // call when exiting a continent, hide indicators of the current zoomed continent.
+    void DesabledContinentIndicators() // call when exiting a continent, hide indicators of the current zoomed continent.
     {
 
         Debug.LogFormat("HideContinentIndicators : Hide indicators for {0}", ContinentSelected.Name);
