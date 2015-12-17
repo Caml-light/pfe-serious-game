@@ -1,46 +1,30 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Continent : MonoBehaviour {
 
     public float posX;
     public float posY; // Coorodonées de la caméra zoomée, modifiable depuis l'interface de Unity (pour chaque continent)
     public float posZoom;
-        
-    public Indicator pop;
-    public Indicator foodNeed;
-    public Indicator foodProd;
-    public Indicator airQuality;
-    public Indicator earthQuality;
-    public Indicator seaQuality;
-    public Indicator biodiversity;
+
+    public Dictionary<string, Indicator> indicators = new Dictionary<string, Indicator>();
+
     public string _Name;
 
-    private Animator surbrillance; 
-   
+    private Animator surbrillance;
 
-    // Use this for initialization
-    void Start () {
-
+    public Continent(string Name, Indicator pop, Indicator foodNeed,Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity)
+    {
         surbrillance = GetComponent<Animator>(); // permet de gérer la surbrillance (on lui attribu l'animator)
-
-        Debug.Log(Name +" start");
-        pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0);
-        foodNeed = new Indicator("Hunger", 100.0, 0.99, 50.0, 1.0);
-        foodProd = new Indicator("Food", 100.0, 0.99, 50.0, 1.0);
-        airQuality = new Indicator("Air", 100.0, 0.99, 50.0, 1.0);
-        earthQuality = new Indicator("Earth", 100.0, 0.99, 50.0, 1.0);
-        seaQuality = new Indicator("Sea", 100.0, 0.99, 50.0, 1.0);
-        biodiversity = new Indicator("Biodiversity", 10000000, 0.99, 10000000, 1.0);
-
-        Global.instance.continents.Add(Name,this);
-        Debug.Log( Name + " finished");
+        indicators.Add("pop", pop);
+        indicators.Add("foodNeed", foodNeed);
+        indicators.Add("foodProd", foodProd);
+        indicators.Add("airQuality", airQuality);
+        indicators.Add("earthQuality", earthQuality);
+        indicators.Add("seaQuality", seaQuality);
+        indicators.Add("biodiversity", biodiversity);
+        _Name = Name;
     }
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
 
     void OnMouseEnter() // Lorsque l'on passe la souris sur le continent
     {
@@ -61,8 +45,6 @@ public class Continent : MonoBehaviour {
     void OnMouseDown() // Lorsque l'on clique sur un continent
     {
         Debug.LogFormat("OnMouseDown on {0}", Name); // Affichage de débug à virer
-        foodProd.UpdateValue(); // On incrémente la variable de nourriture // Rien à faire ici
-        GameManager.instance.nextTurn(); // On passe au tour suivant // RIEN à faire ici
 
 
         if (GameManager.instance.isZoomFinished && !GameManager.instance.isZoomed) // Si on n'est pas en pleine annimation et que on est en vue globale
@@ -73,7 +55,7 @@ public class Continent : MonoBehaviour {
             GameManager.instance.isZoomed = !GameManager.instance.isZoomed; // On annonce que on passe en vue zoomée
             GameManager.instance.isZoomFinished = false; // On indique que l'nnimation commence
 
-            GameManager.instance.DisplayContinentIndicators(); // On affiche les indicateurs
+            GameManager.instance.EnableContinentIndicators(); // On affiche les indicateurs
 
             //INSTUCTIONS lors d'un clic sur le continent ici....
         }
@@ -92,5 +74,11 @@ public class Continent : MonoBehaviour {
         {
             _Name = value;
         }
+    }
+
+
+    public void nextTurn()
+    {
+
     }
 }

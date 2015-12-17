@@ -8,11 +8,21 @@ public class Loader : MonoBehaviour
     void Awake()
     {
         Debug.Log("Loader start");
-        if (GameManager.instance == null)
-            Instantiate(gameManager);
 
+            
         if (Global.instance == null)
+        {
             Instantiate(global);
+        }
+
+        if (GameManager.instance == null)
+        {
+            Instantiate(gameManager);
+        }
+
         Debug.Log("Loader finished");
     }
+
+
+    
 }
