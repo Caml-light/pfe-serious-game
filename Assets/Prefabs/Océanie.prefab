@@ -11,6 +11,7 @@ GameObject:
   - 60: {fileID: 6048884}
   - 212: {fileID: 21253978}
   - 114: {fileID: 11441692}
+  - 95: {fileID: 9537914}
   m_Layer: 0
   m_Name: "Oc\xE9anie"
   m_TagString: Untagged
@@ -516,6 +517,23 @@ PolygonCollider2D:
       - {x: -5.40500021, y: 3.00500011}
       - {x: -5.40500021, y: 3.09500003}
       - {x: -5.46500015, y: 3.16499996}
+--- !u!95 &9537914
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186730}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: bd32dcdecee55864397881353d6409b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11441692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -557,7 +575,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 23f9abff1ca83d448af2faf1fb0cb57a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c58009143d467e44ab30f153c46b3901, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!224 &22414888
 RectTransform:
@@ -566,7 +584,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 9}
   m_LocalScale: {x: 39.7999992, y: 35.5000076, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
