@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Asie
+  m_Controller: {fileID: 9100000, guid: c2dec184eb2e9454db177570a0181c54, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 19d0409cf78411e46a4a69ed256afe3f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f64659a4f66e88a44814e518875b8c07, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1618fd0714e6b3e43988d513e54dbe06, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5d449bf61ee8f2b49be64eeded3d5cc9, type: 2}

@@ -11,6 +11,8 @@ public class Continent : MonoBehaviour {
 
     public string _Name;
 
+    private Animator surbrillance;
+
     public Continent(string Name, Indicator pop, Indicator foodNeed,Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity)
     {
         indicators.Add("pop", pop);
@@ -23,13 +25,16 @@ public class Continent : MonoBehaviour {
         _Name = Name;
     }
 
+    void Start()
+    {
+        surbrillance = GetComponent<Animator>(); // permet de gérer la surbrillance (on lui attribu l'animator)
+    }
+
     void OnMouseEnter() // Lorsque l'on passe la souris sur le continent
     {
         if (GameManager.instance.isZoomed == false && GameManager.instance.isZoomFinished) // On vérifie que l'on est en vue globale (et non en vue zoomée), et que l'on n'est pas en pleine annimation de zoom
         {
-            Vector3 temp = new Vector3(0, 0, -120); // On créé un vecteur de translation pour faire avancer l'image du continent au premier plan (devant celle du planisphère)
-            transform.position += temp; // On l'applique à l'objet
-            /* ça sera supprimé lors de l'ajout des vraies annimaions */
+            surbrillance.SetBool("isMouseOn", true);
         }
     }
 
@@ -37,28 +42,20 @@ public class Continent : MonoBehaviour {
     {
         if (GameManager.instance.isZoomed == false && GameManager.instance.isZoomFinished) // On vérifie que l'on est en vue zoomé, et que l'on n'est pas en pleine annimation de zoom
         {
-            Vector3 temp = new Vector3(0, 0, 120); // On créé un veteur de translation pour le faire passer derière le planisphère
-            transform.position += temp;
-            /* ça sera supprimé lors de l'ajout des vraies annimaions */
+            surbrillance.SetBool("isMouseOn", false);
         }
     }
 
     void OnMouseDown() // Lorsque l'on clique sur un continent
     {
-        Debug.LogFormat("OnMouseDown on {0}", Name); // Affichage de débug à virer
-
 
         if (GameManager.instance.isZoomFinished && !GameManager.instance.isZoomed) // Si on n'est pas en pleine annimation et que on est en vue globale
         {
+            surbrillance.SetBool("isMouseOn", false);
+
             GameManager.instance.ContinentSelected = this; // On attribu au GameManager le continent sélectionné 
             GameManager.instance.isZoomed = !GameManager.instance.isZoomed; // On annonce que on passe en vue zoomée
             GameManager.instance.isZoomFinished = false; // On indique que l'nnimation commence
-
-            if (transform.position.z < 2) // correction d'un bug
-            { 
-                Vector3 temp = new Vector3(0, 0, 120); // ça sera supprimé lors de l'ajout des vraies annimaions
-                transform.position += temp;
-            }
 
             GameManager.instance.EnableContinentIndicators(); // On affiche les indicateurs
 
