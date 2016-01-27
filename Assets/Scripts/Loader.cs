@@ -5,6 +5,7 @@ public class Loader : MonoBehaviour
     public GameObject gameManager;
     public GameObject global;
 
+
     void Awake()
     {
         Debug.Log("Loader start");

@@ -8,12 +8,13 @@ public class Continent : MonoBehaviour {
     public float posZoom;
 
     public Dictionary<string, Indicator> indicators = new Dictionary<string, Indicator>();
+    //public static Dictionary<string, Technologie> technologies = new Dictionary<string, Technologie>();
 
     public string _Name;
 
     private Animator surbrillance;
 
-    public Continent(string Name, Indicator pop, Indicator foodNeed,Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity)
+    public Continent(string name, Indicator pop, Indicator foodNeed,Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity)
     {
         indicators.Add("pop", pop);
         indicators.Add("foodNeed", foodNeed);
@@ -22,8 +23,26 @@ public class Continent : MonoBehaviour {
         indicators.Add("earthQuality", earthQuality);
         indicators.Add("seaQuality", seaQuality);
         indicators.Add("biodiversity", biodiversity);
-        _Name = Name;
+        _Name = name;
     }
+
+    public void AddTechnologie(string indicatorName, double modifier){
+
+        Debug.Log("Continent.AddTechnologie");
+        Indicator bufferIndicator;
+        if (indicators.TryGetValue("foodProd", out bufferIndicator))
+        {
+            bufferIndicator.Modifier += modifier;
+        }
+
+        Debug.LogFormat("test : {0}, {1}", indicators[indicatorName].Modifier, modifier);
+
+    }
+
+
+
+
+
 
     void Start()
     {

@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.ObjectModel;
+using Assets.Scripts.Classes;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour {
     public float smooth = 2; // Permet de géré la rapidité du zoom, modifiable via l'interface de Unity
 
     private Continent continentSelected; // Le continent séléctionné par le joueur. Null quand on est en vue globale
+
+    public Dictionary<string, Technologie> allTechnologies = new Dictionary<string, Technologie>();
 
 
     private Text foodUS;
@@ -64,9 +68,18 @@ public class GameManager : MonoBehaviour {
     {
         Debug.Log("nextTurn GM");
         Global.instance.nextTurn();
-        UpdateDisplay();
+        UpdateDisplay();       
+    }
 
-      
+    public void AddTechnologie(string techName)
+    {
+        Debug.Log("AddTechnologie GM"); 
+               
+        string indicator = Global.instance.allTechnologies[techName].Indicator;
+        double modifier = Global.instance.allTechnologies[techName].Modifier;
+        string continentName = continentSelected.Name;
+
+        Global.instance.continents[continentName].AddTechnologie(indicator, modifier);
     }
 
 

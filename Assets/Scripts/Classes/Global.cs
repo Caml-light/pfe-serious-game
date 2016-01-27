@@ -8,6 +8,7 @@ public class Global : MonoBehaviour {
 
     public Dictionary<string,Continent> continents = new Dictionary<string,Continent>();
     public Dictionary<string, Info> globalIndicators = new Dictionary<string, Info>();
+    public Dictionary<string, Technologie> allTechnologies = new Dictionary<string, Technologie>();
 
     void Start()
     {
@@ -31,6 +32,9 @@ public class Global : MonoBehaviour {
             AustraliaInitilization();
 
             UpdateGlobalIndicators();
+
+            //definition des technologies
+            allTechnologies.Add("fire", new Technologie("fire", 1, 1, "fire", "foodProd", 0.015));
 
         }            
         else if (instance != this)
