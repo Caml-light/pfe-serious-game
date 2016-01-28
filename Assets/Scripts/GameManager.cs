@@ -5,7 +5,8 @@ using System.Collections.ObjectModel;
 using Assets.Scripts.Classes;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     //public Continent europe, afrique, ameriqueNord, ameriqueSud, oceanie, asie;
 
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour {
     public bool isZoomed = false; // Sommes-nous en vue globale ou en vue zoomée sur un continent ?
     public bool isZoomFinished = true; // l'annimation est-elle terminée ?
 
-    public float LockedZoom = 8596.979f;  
+    public float LockedZoom = 8596.979f;
     public float LockedX = 0f;            /* Les coordonées de la caméra en vue globale */
     public float LockedY = 0f;
 
@@ -27,9 +28,24 @@ public class GameManager : MonoBehaviour {
     public Dictionary<string, Technologie> allTechnologies = new Dictionary<string, Technologie>();
 
 
-    private Text foodUS;
-    private Text foodEU;
-    private Text foodGlobal;
+    private GameObject panelContinent;
+    private GameObject barreIcones;
+    private Text foodText;
+    private Text energyText;
+    private Text researchText;
+    private Text popText;
+    private Text sickText;
+    private Text earthText;
+    private Text moneyText;
+
+    private GameObject foodIcon;
+    private GameObject energyIcon;
+    private GameObject researchIcon;
+    private GameObject popIcon;
+    private GameObject sickIcon;
+    private GameObject earthIcon;
+    private GameObject moneyIcon;
+
 
     public Continent ContinentSelected // Propriétés du continent séléctionné
     {
@@ -52,29 +68,43 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
     }
 
-        void Start () {
+    void Start()
+    {
 
         Debug.Log("GM start");
-        foodUS = GameObject.Find("FoodUS").GetComponent<Text>();
-        foodUS.enabled = false;
-        foodEU = GameObject.Find("FoodEurope").GetComponent<Text>();
-        foodEU.enabled = false;
-        foodGlobal = GameObject.Find("FoodGlobal").GetComponent<Text>();
-        UpdateDisplay();
+
+        foodText = GameObject.Find("globalTextFood").GetComponent<Text>();
+        moneyText = GameObject.Find("globalTextMoney").GetComponent<Text>();
+        energyText = GameObject.Find("globalTextEnergy").GetComponent<Text>();
+        popText = GameObject.Find("globalTextPop").GetComponent<Text>();
+        sickText = GameObject.Find("globalTextSickness").GetComponent<Text>();
+        earthText = GameObject.Find("globalTextEarth").GetComponent<Text>();
+        researchText = GameObject.Find("globalTextResearch").GetComponent<Text>();
+
+        foodIcon = GameObject.Find("globalFood");
+        energyIcon = GameObject.Find("globalEnergy");
+        researchIcon = GameObject.Find("globalResearch");
+        popIcon = GameObject.Find("globalPop");
+        sickIcon = GameObject.Find("globalSickness");
+        earthIcon = GameObject.Find("globalEarth");
+        moneyIcon = GameObject.Find("globalMoney");
+
+        barreIcones = GameObject.Find("BarreHaut");
+        panelContinent = GameObject.Find("PanelContinent");
+        panelContinent.SetActive(false);
 
     }
 
-     public void nextTurn()
+    public void nextTurn()
     {
         Debug.Log("nextTurn GM");
         Global.instance.nextTurn();
-        UpdateDisplay();       
     }
 
     public void AddTechnologie(string techName)
     {
-        Debug.Log("AddTechnologie GM"); 
-               
+        Debug.Log("AddTechnologie GM");
+
         string indicator = Global.instance.allTechnologies[techName].Indicator;
         double modifier = Global.instance.allTechnologies[techName].Modifier;
         string continentName = continentSelected.Name;
@@ -82,38 +112,53 @@ public class GameManager : MonoBehaviour {
         Global.instance.continents[continentName].AddTechnologie(indicator, modifier);
     }
 
-
-    public void UpdateDisplay()
-    {
-        Debug.Log("UpdateDisplay GM");        
-        foodEU.text = "Europe : "  + Global.instance.continents["Europe"].indicators["foodProd"].Value.ToString();
-        foodUS.text = "NA : " + Global.instance.continents["Amérique du Nord"].indicators["foodProd"].Value.ToString();
-        foodGlobal.text = "Global : " + Global.instance.globalIndicators["foodProd"].Value.ToString();
-    }
-
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
         if (Input.GetKey(KeyCode.Escape) && isZoomFinished && isZoomed) // Si l'o appuie sur la touche "Echap", que nous ne sommes pas en pleine annimation et en vue zoomée
         {
             isZoomed = !isZoomed; // On annonce qu'on passe en vue globale
             isZoomFinished = false; // Que l'annimation commence
-            DesabledContinentIndicators(); // On cache les indicateurs du contient séléctionné
             continentSelected = null; // On désélectionne le continent
         }
 
         if (isZoomed && !isZoomFinished) // Si on est en en vue zoomée mais que l'annimation n'est pas fini (donc qu'on est en transition vers une vue zoomée)
         {
             ZoomInContinent(); // Permet de s'approcher de la position zoomée (appelé environ 33 fois pour une transition)
+            panelContinent.SetActive(true);
+            foodIcon.SetActive(false);
+            popIcon.SetActive(false);
+            earthIcon.SetActive(false);
+            sickIcon.SetActive(false);
+            energyIcon.SetActive(false);
+            foodText.gameObject.SetActive(false);
+            earthText.gameObject.SetActive(false);
+            popText.gameObject.SetActive(false);
+            sickText.gameObject.SetActive(false);
+            energyText.gameObject.SetActive(false);
+
+         
 
         }
         else if (!isZoomed && !isZoomFinished) // Sinon, si on est en transition vers la vue globale
         {
             ZoomOutContinent(); // Permet de s'approcher de la position dézoomée (appelé environ 33 fois pour une transition)
+            panelContinent.SetActive(false);
+            foodIcon.SetActive(true);
+            popIcon.SetActive(true);
+            earthIcon.SetActive(true);
+            sickIcon.SetActive(true);
+            energyIcon.SetActive(true);
+            foodText.gameObject.SetActive(true);
+            earthText.gameObject.SetActive(true);
+            popText.gameObject.SetActive(true);
+            sickText.gameObject.SetActive(true);
+            energyText.gameObject.SetActive(true);
         }
     }
 
-       
+
 
     void ZoomInContinent() // A chaqeu appel, va modifier la position de la caméra pour s'approcher de la position zoomée
     {
@@ -161,47 +206,5 @@ public class GameManager : MonoBehaviour {
             delta = 0;
         }
 
-    }
-
-    public void EnableContinentIndicators() // call when clicking on a continent, display indicators for the continent clicked
-    {
-        Debug.LogFormat("DisplayContinentIndicators : Display indicators for {0}", ContinentSelected.Name);
-
-        switch (ContinentSelected.Name)
-        {
-            case "Europe":
-                foodEU.enabled = true;
-                break;
-
-            case "Amérique du Nord":
-                foodUS.enabled = true;
-                break;
-
-            default:
-                foodGlobal.enabled = true;
-
-                break;
-        }
-    }
-
-    void DesabledContinentIndicators() // call when exiting a continent, hide indicators of the current zoomed continent.
-    {
-
-        Debug.LogFormat("HideContinentIndicators : Hide indicators for {0}", ContinentSelected.Name);
-        switch (ContinentSelected.Name)
-        {
-            case "Europe":
-                foodEU.enabled = false;
-
-                break;
-
-            case "Amérique du Nord":
-                foodUS.enabled = false;
-                break;
-
-            default:
-
-                break;
-        }
     }
 }

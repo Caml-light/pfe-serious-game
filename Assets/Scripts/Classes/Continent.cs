@@ -76,7 +76,6 @@ public class Continent : MonoBehaviour {
             GameManager.instance.isZoomed = !GameManager.instance.isZoomed; // On annonce que on passe en vue zoomée
             GameManager.instance.isZoomFinished = false; // On indique que l'nnimation commence
 
-            GameManager.instance.EnableContinentIndicators(); // On affiche les indicateurs
 
             //INSTUCTIONS lors d'un clic sur le continent ici....
 

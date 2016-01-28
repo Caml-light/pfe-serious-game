@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Classes;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Global : MonoBehaviour {
 
@@ -9,6 +10,15 @@ public class Global : MonoBehaviour {
     public Dictionary<string,Continent> continents = new Dictionary<string,Continent>();
     public Dictionary<string, Info> globalIndicators = new Dictionary<string, Info>();
     public Dictionary<string, Technologie> allTechnologies = new Dictionary<string, Technologie>();
+
+    private Text foodText;
+    private Text energyText;
+    private Text researchText;
+    private Text popText;
+    private Text sickText;
+    private Text earthText;
+    private Text moneyText;
+    
 
     void Start()
     {
@@ -30,6 +40,14 @@ public class Global : MonoBehaviour {
             NorthAmericaInitilization();
             SouthhAmericaInitilization();
             AustraliaInitilization();
+
+            foodText = GameObject.Find("globalTextFood").GetComponent<Text>();
+            moneyText = GameObject.Find("globalTextMoney").GetComponent<Text>();
+            energyText = GameObject.Find("globalTextEnergy").GetComponent<Text>();
+            popText = GameObject.Find("globalTextPop").GetComponent<Text>();
+            sickText = GameObject.Find("globalTextSickness").GetComponent<Text>();
+            earthText = GameObject.Find("globalTextEarth").GetComponent<Text>();
+            researchText = GameObject.Find("globalTextResearch").GetComponent<Text>();
 
             UpdateGlobalIndicators();
 
@@ -95,6 +113,20 @@ public class Global : MonoBehaviour {
             }
 
             globalIndicators[indicatorName].Value = indicatorValueBuffer;
+        }
+
+        foreach (Info i in globalIndicators.Values)
+        {
+           switch(i.Name)
+            {
+                case "pop":
+                    popText.text = i.Value.ToString();
+                    break;
+
+                case "foodProd":
+                    foodText.text = i.Value.ToString();
+                    break;
+            }
         }
         Debug.Log("UpdateGlobalIndicators end");
     }
