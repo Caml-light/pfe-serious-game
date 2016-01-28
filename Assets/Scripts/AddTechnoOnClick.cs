@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class AddTechnoOnClick : MonoBehaviour {
@@ -17,6 +18,10 @@ public class AddTechnoOnClick : MonoBehaviour {
     void OnMouseDown()
     {
         Debug.Log("Add technologie OnMouseDown");
+        Text valeur = GameObject.Find(transform.parent.name).transform.Find("TechQuantity").GetComponent<Text>();
+        int i = int.Parse(valeur.text);
+        i++;
+        valeur.text = i.ToString();
         GameManager.instance.AddTechnologie("fire");
     }
 }

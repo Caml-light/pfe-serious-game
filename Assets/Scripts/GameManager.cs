@@ -126,6 +126,8 @@ public class GameManager : MonoBehaviour
         if (isZoomed && !isZoomFinished) // Si on est en en vue zoomée mais que l'annimation n'est pas fini (donc qu'on est en transition vers une vue zoomée)
         {
             ZoomInContinent(); // Permet de s'approcher de la position zoomée (appelé environ 33 fois pour une transition)
+
+            //RIN A FAIRE ICI... CETTE FONCTION EST APPELÉE 33 FOIS LORS D'UN ZOOM !!!!!
             panelContinent.SetActive(true);
             foodIcon.SetActive(false);
             popIcon.SetActive(false);

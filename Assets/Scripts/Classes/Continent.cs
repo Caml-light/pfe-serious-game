@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 public class Continent : MonoBehaviour {
 
+
+    public GameObject grilleTechno; // grille contenant les technologies
+    public GameObject technoPrefab; // Préfab de Technologie
+
     public float posX;
     public float posY; // Coorodonées de la caméra zoomée, modifiable depuis l'interface de Unity (pour chaque continent)
     public float posZoom;
@@ -74,10 +78,12 @@ public class Continent : MonoBehaviour {
 
             GameManager.instance.ContinentSelected = this; // On attribu au GameManager le continent sélectionné 
             GameManager.instance.isZoomed = !GameManager.instance.isZoomed; // On annonce que on passe en vue zoomée
-            GameManager.instance.isZoomFinished = false; // On indique que l'nnimation commence
+            GameManager.instance.isZoomFinished = false; // On indique que l'annimation commence
 
 
             //INSTUCTIONS lors d'un clic sur le continent ici....
+
+           
 
         }
         
