@@ -1,45 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-public class Continent : MonoBehaviour {
-
-
-    public GameObject grilleTechno; // grille contenant les technologies
-    public GameObject technoPrefab; // Préfab de Technologie
+public class Continent : MonoBehaviour
+{
 
     public float posX;
     public float posY; // Coorodonées de la caméra zoomée, modifiable depuis l'interface de Unity (pour chaque continent)
     public float posZoom;
 
-    public Dictionary<string, Indicator> indicators = new Dictionary<string, Indicator>();
-    //public static Dictionary<string, Technologie> technologies = new Dictionary<string, Technologie>();
-
-    public string _Name;
+    private Dictionary<string, Indicator> _indicators = new Dictionary<string, Indicator>();
+    private Dictionary<string, int> _technologies = new Dictionary<string, int>();
+    private string _nom;
 
     private Animator surbrillance;
 
-    public Continent(string name, Indicator pop, Indicator foodNeed,Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity)
+    public Continent(string sname, Indicator pop, Indicator foodNeed, Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity)
     {
-        indicators.Add("pop", pop);
-        indicators.Add("foodNeed", foodNeed);
-        indicators.Add("foodProd", foodProd);
-        indicators.Add("airQuality", airQuality);
-        indicators.Add("earthQuality", earthQuality);
-        indicators.Add("seaQuality", seaQuality);
-        indicators.Add("biodiversity", biodiversity);
-        _Name = name;
+
+        Debug.Log("contruction du continent : " + sname);
+
+        Indicators.Add("pop", pop);
+        Indicators.Add("foodNeed", foodNeed);
+        Indicators.Add("foodProd", foodProd);
+        Indicators.Add("airQuality", airQuality);
+        Indicators.Add("earthQuality", earthQuality);
+        Indicators.Add("seaQuality", seaQuality);
+        Indicators.Add("biodiversity", biodiversity);
+
+        Nom = sname;
     }
 
-    public void AddTechnologie(string indicatorName, double modifier){
+    public void AddTechnologie(string indicatorName, double modifier)
+    {
 
         Debug.Log("Continent.AddTechnologie");
         Indicator bufferIndicator;
-        if (indicators.TryGetValue("foodProd", out bufferIndicator))
+        if (Indicators.TryGetValue("foodProd", out bufferIndicator))
         {
             bufferIndicator.Modifier += modifier;
         }
 
-        Debug.LogFormat("test : {0}, {1}", indicators[indicatorName].Modifier, modifier);
+        Debug.LogFormat("test : {0}, {1}", Indicators[indicatorName].Modifier, modifier);
 
     }
 
@@ -81,28 +83,62 @@ public class Continent : MonoBehaviour {
             GameManager.instance.isZoomFinished = false; // On indique que l'annimation commence
 
 
-            //INSTUCTIONS lors d'un clic sur le continent ici....
 
-           
+            // ZONE à CORRIGER //
+
+            //INSTUCTIONS lors d'un clic sur le continent ici....
+            GameObject.Find("PanelContinent").transform.Find("TechButton").GetComponent<Button>().onClick.Invoke(); // Simulation du click sur le bouton Technologie du panel (afin d'afficher les technologies asociées au continent)
+                                                                                                                    // Ne fonctionne pas... je ne sais pas pourquoi. 
+                                                                                                                    //Null reference exception.....
+                                                                                                                    //utiliser la methode onClick.Invoke()
+
+            // ZONE à CORRIGER //
+
+
 
         }
-        
+
 
     }
 
-    public string Name
+    public string Nom
     {
         get
         {
-            return _Name;
+            return _nom;
         }
 
         set
         {
-            _Name = value;
+            _nom = value;
         }
     }
 
+    public Dictionary<string, int> Technologies
+    {
+        get
+        {
+            return _technologies;
+        }
+
+        set
+        {
+            _technologies = value;
+        }
+    }
+
+    public Dictionary<string, Indicator> Indicators
+    {
+        get
+        {
+            return _indicators;
+        }
+
+        set
+        {
+            _indicators = value;
+        }
+    }
 
     public void nextTurn()
     {

@@ -103,24 +103,28 @@ public class GameManager : MonoBehaviour
 
     public void AddTechnologie(string techName)
     {
-        Debug.Log("AddTechnologie GM");
+        Debug.Log("AddTechnologie(" + techName +") sur l'" + ContinentSelected.name + " 1 GM");
 
-        string indicator = Global.instance.allTechnologies[techName].Indicator;
-        double modifier = Global.instance.allTechnologies[techName].Modifier;
-        string continentName = continentSelected.Name;
+        string indicator = Global.instance.unlockedTechnologies[techName].Indicator;
+        double modifier = Global.instance.unlockedTechnologies[techName].Modifier;
+        string continentName = ContinentSelected.name;
 
+        Debug.Log("AddTechnologie(" + techName + ") sur l'" + ContinentSelected.name + " 2 GM");
+
+        Global.instance.continents[continentName].Technologies[techName]++;
         Global.instance.continents[continentName].AddTechnologie(indicator, modifier);
+        Debug.Log("AddTechnologie(" + techName + ") sur l'" + ContinentSelected.name + " 3 GM");
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetKey(KeyCode.Escape) && isZoomFinished && isZoomed) // Si l'o appuie sur la touche "Echap", que nous ne sommes pas en pleine annimation et en vue zoomée
+        if (Input.GetKey(KeyCode.Escape) && isZoomFinished && isZoomed) // Si l'on appuie sur la touche "Echap", que nous ne sommes pas en pleine annimation et en vue zoomée
         {
             isZoomed = !isZoomed; // On annonce qu'on passe en vue globale
             isZoomFinished = false; // Que l'annimation commence
-            continentSelected = null; // On désélectionne le continent
+            ContinentSelected = null; // On désélectionne le continent
         }
 
         if (isZoomed && !isZoomFinished) // Si on est en en vue zoomée mais que l'annimation n'est pas fini (donc qu'on est en transition vers une vue zoomée)

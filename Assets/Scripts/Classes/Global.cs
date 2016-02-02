@@ -3,13 +3,14 @@ using Assets.Scripts.Classes;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class Global : MonoBehaviour {
+public class Global : MonoBehaviour
+{
 
     public static Global instance = null;
 
-    public Dictionary<string,Continent> continents = new Dictionary<string,Continent>();
+    public Dictionary<string, Continent> continents = new Dictionary<string, Continent>();
     public Dictionary<string, Info> globalIndicators = new Dictionary<string, Info>();
-    public Dictionary<string, Technologie> allTechnologies = new Dictionary<string, Technologie>();
+    public Dictionary<string, Technologie> unlockedTechnologies = new Dictionary<string, Technologie>();
 
     private Text foodText;
     private Text energyText;
@@ -18,7 +19,7 @@ public class Global : MonoBehaviour {
     private Text sickText;
     private Text earthText;
     private Text moneyText;
-    
+
 
     void Start()
     {
@@ -41,6 +42,14 @@ public class Global : MonoBehaviour {
             SouthhAmericaInitilization();
             AustraliaInitilization();
 
+            foreach (KeyValuePair<string, Continent> entry in continents) // ajout des technologies de bases à chaque continent
+            {
+                entry.Value.Technologies.Add("Feu", 0);
+                entry.Value.Technologies.Add("Chasse", 0);
+                entry.Value.Technologies.Add("Cueillette", 0);
+                entry.Value.Technologies.Add("Pêche", 0);
+            }
+
             foodText = GameObject.Find("globalTextFood").GetComponent<Text>();
             moneyText = GameObject.Find("globalTextMoney").GetComponent<Text>();
             energyText = GameObject.Find("globalTextEnergy").GetComponent<Text>();
@@ -52,33 +61,38 @@ public class Global : MonoBehaviour {
             UpdateGlobalIndicators();
 
             //definition des technologies
-            allTechnologies.Add("fire", new Technologie("fire", 1, 1, "fire", "foodProd", 0.015));
+            unlockedTechnologies.Add("Feu", new Technologie("Feu", 1, 1, "Sprites/feu", "foodProd", 0.015));
+            unlockedTechnologies.Add("Chasse", new Technologie("Chasse", 1, 1, "Sprites/chasse", "foodProd", 0.017));
+            unlockedTechnologies.Add("Pêche", new Technologie("Pêche", 1, 1, "Sprites/pêche", "foodProd", 0.015));
+            unlockedTechnologies.Add("Cueillette", new Technologie("Cueillette", 1, 1, "Sprites/cueillette", "foodProd", 0.010));
 
-        }            
+        }
         else if (instance != this)
         {
             Destroy(gameObject);
         }
-            
+
 
         Debug.Log("Global finished");
-    }    
+    }
 
-	void Awake () {
+    void Awake()
+    {
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void nextTurn()
     {
         Debug.Log("NextTurn Global.cs");
         foreach (Continent c in continents.Values)
         {
-            foreach (Indicator i in c.indicators.Values)
+            foreach (Indicator i in c.Indicators.Values)
             {
                 i.UpdateValue();
             }
@@ -104,8 +118,8 @@ public class Global : MonoBehaviour {
 
             foreach (Continent c in continents.Values)
             {
-                Debug.LogFormat("{0}", c.Name);
-                success = c.indicators.TryGetValue(indicatorName, out indicatorBuffer);
+                Debug.LogFormat("{0}", c.Nom);
+                success = c.Indicators.TryGetValue(indicatorName, out indicatorBuffer);
                 if (success)
                 {
                     indicatorValueBuffer += indicatorBuffer.Value;
@@ -117,7 +131,7 @@ public class Global : MonoBehaviour {
 
         foreach (Info i in globalIndicators.Values)
         {
-           switch(i.Name)
+            switch (i.Name)
             {
                 case "pop":
                     popText.text = i.Value.ToString();
@@ -229,7 +243,7 @@ public class Global : MonoBehaviour {
     private void AustraliaInitilization()
     {
 
-        string name = "Australie";
+        string name = "Océanie";
         Debug.Log("Initialization of Australia continent start");
         Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0);
         Indicator foodNeed = new Indicator("Hunger", 100.0, 0.99, 50.0, 1.0);

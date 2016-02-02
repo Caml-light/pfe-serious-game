@@ -63,6 +63,19 @@ public class Technologie : MonoBehaviour {
         }
     }
 
+    public string IconPath
+    {
+        get
+        {
+            return _iconPath;
+        }
+
+        set
+        {
+            _iconPath = value;
+        }
+    }
+
     public string Indicator
     {
         get
