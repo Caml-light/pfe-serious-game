@@ -21,19 +21,29 @@ public class Global : MonoBehaviour
     private Text moneyText;
 
 
+
+    Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0, "Sprites/pop_totale");
+    Indicator foodNeed = new Indicator("Besoin en nourriture", 100.0, 0.99, 50.0, 1.0, "Sprites/nourriture");
+    Indicator foodProd = new Indicator("Production de nourriture", 100.0, 0.99, 50.0, 1.0, "Sprites/nourriture");
+    Indicator airQuality = new Indicator("Qualité de l'air", 100.0, 0.99, 50.0, 1.0, "Sprites/sante_planete");
+    Indicator earthQuality = new Indicator("Qualité de la terre", 100.0, 0.99, 50.0, 1.0, "Sprites/sante_planete");
+    Indicator seaQuality = new Indicator("Qualité de la mer", 100.0, 0.99, 50.0, 1.0, "Sprites/sante_planete");
+    Indicator biodiversity = new Indicator("Biodiversité", 10000000, 0.99, 10000000, 1.0, "Sprites/sante_planete");
+
+
     void Start()
     {
         Debug.Log("Global start");
         if (instance == null)
         {
             instance = this;
-            globalIndicators.Add("pop", new Info("pop", 0));
-            globalIndicators.Add("foodNeed", new Info("foodNeed", 0));
-            globalIndicators.Add("foodProd", new Info("foodProd", 0));
-            globalIndicators.Add("airQuality", new Info("airQuality", 0));
-            globalIndicators.Add("earthQuality", new Info("earthQuality", 0));
-            globalIndicators.Add("seaQuality", new Info("seaQuality", 0));
-            globalIndicators.Add("biodiversity", new Info("biodiversity", 0));
+            globalIndicators.Add("pop", new Info("Population", 0));
+            globalIndicators.Add("foodNeed", new Info("Besoin en nourriture", 0));
+            globalIndicators.Add("foodProd", new Info("Production de nourriture", 0));
+            globalIndicators.Add("airQuality", new Info("Qualité de l'air", 0));
+            globalIndicators.Add("earthQuality", new Info("Qualité de la terre", 0));
+            globalIndicators.Add("seaQuality", new Info("Qualité de la mer", 0));
+            globalIndicators.Add("biodiversity", new Info("Biodiversité", 0));
 
             EuropeInitilization();
             AsiaInitilization();
@@ -150,13 +160,6 @@ public class Global : MonoBehaviour
         Debug.Log("Initialization of Europe continent start");
 
         string name = "Europe";
-        Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodNeed = new Indicator("Hunger", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodProd = new Indicator("Food", 100.0, 0.99, 50.0, 1.0);
-        Indicator airQuality = new Indicator("Air", 100.0, 0.99, 50.0, 1.0);
-        Indicator earthQuality = new Indicator("Earth", 100.0, 0.99, 50.0, 1.0);
-        Indicator seaQuality = new Indicator("Sea", 100.0, 0.99, 50.0, 1.0);
-        Indicator biodiversity = new Indicator("Biodiversity", 10000000, 0.99, 10000000, 1.0);
 
         Continent continentEurope = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
 
@@ -169,13 +172,6 @@ public class Global : MonoBehaviour
 
         string name = "Asie";
         Debug.Log("Initialization of Asia continent start");
-        Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodNeed = new Indicator("Hunger", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodProd = new Indicator("Food", 100.0, 0.99, 50.0, 1.0);
-        Indicator airQuality = new Indicator("Air", 100.0, 0.99, 50.0, 1.0);
-        Indicator earthQuality = new Indicator("Earth", 100.0, 0.99, 50.0, 1.0);
-        Indicator seaQuality = new Indicator("Sea", 100.0, 0.99, 50.0, 1.0);
-        Indicator biodiversity = new Indicator("Biodiversity", 10000000, 0.99, 10000000, 1.0);
 
         Continent continentAsia = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
 
@@ -188,13 +184,6 @@ public class Global : MonoBehaviour
 
         string name = "Amérique du Nord";
         Debug.Log("Initialization of North America continent start");
-        Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodNeed = new Indicator("Hunger", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodProd = new Indicator("Food", 100.0, 0.99, 50.0, 1.0);
-        Indicator airQuality = new Indicator("Air", 100.0, 0.99, 50.0, 1.0);
-        Indicator earthQuality = new Indicator("Earth", 100.0, 0.99, 50.0, 1.0);
-        Indicator seaQuality = new Indicator("Sea", 100.0, 0.99, 50.0, 1.0);
-        Indicator biodiversity = new Indicator("Biodiversity", 10000000, 0.99, 10000000, 1.0);
 
         Continent continentNA = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
 
@@ -207,13 +196,6 @@ public class Global : MonoBehaviour
 
         string name = "Amérique du Sud";
         Debug.Log("Initialization of South America continent start");
-        Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodNeed = new Indicator("Hunger", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodProd = new Indicator("Food", 100.0, 0.99, 50.0, 1.0);
-        Indicator airQuality = new Indicator("Air", 100.0, 0.99, 50.0, 1.0);
-        Indicator earthQuality = new Indicator("Earth", 100.0, 0.99, 50.0, 1.0);
-        Indicator seaQuality = new Indicator("Sea", 100.0, 0.99, 50.0, 1.0);
-        Indicator biodiversity = new Indicator("Biodiversity", 10000000, 0.99, 10000000, 1.0);
 
         Continent continentSA = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
 
@@ -226,13 +208,6 @@ public class Global : MonoBehaviour
 
         string name = "Afrique";
         Debug.Log("Initialization of Africa continent start");
-        Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodNeed = new Indicator("Hunger", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodProd = new Indicator("Food", 100.0, 0.99, 50.0, 1.0);
-        Indicator airQuality = new Indicator("Air", 100.0, 0.99, 50.0, 1.0);
-        Indicator earthQuality = new Indicator("Earth", 100.0, 0.99, 50.0, 1.0);
-        Indicator seaQuality = new Indicator("Sea", 100.0, 0.99, 50.0, 1.0);
-        Indicator biodiversity = new Indicator("Biodiversity", 10000000, 0.99, 10000000, 1.0);
 
         Continent continentAfrica = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
 
@@ -245,13 +220,6 @@ public class Global : MonoBehaviour
 
         string name = "Océanie";
         Debug.Log("Initialization of Australia continent start");
-        Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodNeed = new Indicator("Hunger", 100.0, 0.99, 50.0, 1.0);
-        Indicator foodProd = new Indicator("Food", 100.0, 0.99, 50.0, 1.0);
-        Indicator airQuality = new Indicator("Air", 100.0, 0.99, 50.0, 1.0);
-        Indicator earthQuality = new Indicator("Earth", 100.0, 0.99, 50.0, 1.0);
-        Indicator seaQuality = new Indicator("Sea", 100.0, 0.99, 50.0, 1.0);
-        Indicator biodiversity = new Indicator("Biodiversity", 10000000, 0.99, 10000000, 1.0);
 
         Continent continentAustralia = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
 

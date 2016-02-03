@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Classes;
 
-public class Technologie : MonoBehaviour {
+public class Technologie : MonoBehaviour
+{
     private string _name;
     private int _cost; // money the technologie cost
     private int _value; // research point the technologie cost
@@ -14,6 +15,7 @@ public class Technologie : MonoBehaviour {
 
     public Technologie(string name, int cost, int value, string iconPath, string indi, double modifier)
     {
+
         _name = name;
         _cost = cost;
         _value = value;
@@ -22,6 +24,7 @@ public class Technologie : MonoBehaviour {
         _modifier = modifier;
 
         Debug.Log("technologie created");
+
     }
 
     public string Name

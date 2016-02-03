@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-using System.Collections.ObjectModel;
-using Assets.Scripts.Classes;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
@@ -28,7 +25,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<string, Technologie> allTechnologies = new Dictionary<string, Technologie>();
 
 
-    private GameObject panelContinent;
+    public GameObject panelContinent;
     private GameObject barreIcones;
     private Text foodText;
     private Text energyText;
@@ -103,17 +100,14 @@ public class GameManager : MonoBehaviour
 
     public void AddTechnologie(string techName)
     {
-        Debug.Log("AddTechnologie(" + techName +") sur l'" + ContinentSelected.name + " 1 GM");
+        Debug.Log("AddTechnologie(" + techName +") sur l'" + ContinentSelected.name + " [GameManager]");
 
         string indicator = Global.instance.unlockedTechnologies[techName].Indicator;
         double modifier = Global.instance.unlockedTechnologies[techName].Modifier;
         string continentName = ContinentSelected.name;
 
-        Debug.Log("AddTechnologie(" + techName + ") sur l'" + ContinentSelected.name + " 2 GM");
-
         Global.instance.continents[continentName].Technologies[techName]++;
         Global.instance.continents[continentName].AddTechnologie(indicator, modifier);
-        Debug.Log("AddTechnologie(" + techName + ") sur l'" + ContinentSelected.name + " 3 GM");
     }
 
     // Update is called once per frame
@@ -132,7 +126,8 @@ public class GameManager : MonoBehaviour
             ZoomInContinent(); // Permet de s'approcher de la position zoomée (appelé environ 33 fois pour une transition)
 
             //RIN A FAIRE ICI... CETTE FONCTION EST APPELÉE 33 FOIS LORS D'UN ZOOM !!!!!
-            panelContinent.SetActive(true);
+            // GROS PORC DE THOMAS LEFRANC
+
             foodIcon.SetActive(false);
             popIcon.SetActive(false);
             earthIcon.SetActive(false);
@@ -143,8 +138,6 @@ public class GameManager : MonoBehaviour
             popText.gameObject.SetActive(false);
             sickText.gameObject.SetActive(false);
             energyText.gameObject.SetActive(false);
-
-         
 
         }
         else if (!isZoomed && !isZoomFinished) // Sinon, si on est en transition vers la vue globale

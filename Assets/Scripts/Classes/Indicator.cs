@@ -10,22 +10,36 @@ public class Indicator : Info
     ///     Name, Value, Modifier, Equilibrium
     /// </summary>
 
+    private string _iconPath;
+
     private double _Constant;
     private double _Equilibrium;
     private double _Modifier;
 
-    public Indicator(string Name, double Value, double Constant, double Equilibrium, double Modifier) : base (Name, Value)
+    public Indicator(string Name, double Value, double Constant, double Equilibrium, double Modifier, string spath) : base (Name, Value)
     {
 
         //_Constant = Constant;
         _Constant  = 0.99; // Default value to try. This this the equivalent of 1% of modification / turn
         _Equilibrium = Equilibrium;
         _Modifier = Modifier;
+        _iconPath = spath;
 
-        Debug.LogFormat("Indicator (Name, Value, Constant, Equilibrium, Modifier) created :{0}, {1}, {2}, {3}, {4}", _Name, _Value, _Constant, _Equilibrium, _Modifier );
+        Debug.LogFormat("Indicator (Name, Value, Constant, Equilibrium, Modifier) created :{0}, {1}, {2}, {3}, {4}, {5}", _Name, _Value, _Constant, _Equilibrium, _Modifier, _iconPath);
     }
 
-   
+    public string IconPath
+    {
+        get
+        {
+            return _iconPath;
+        }
+
+        set
+        {
+            _iconPath = value;
+        }
+    }
 
     public double Modifier
     {

@@ -82,19 +82,8 @@ public class Continent : MonoBehaviour
             GameManager.instance.isZoomed = !GameManager.instance.isZoomed; // On annonce que on passe en vue zoomée
             GameManager.instance.isZoomFinished = false; // On indique que l'annimation commence
 
-
-
-            // ZONE à CORRIGER //
-
-            //INSTUCTIONS lors d'un clic sur le continent ici....
-            GameObject.Find("PanelContinent").transform.Find("TechButton").GetComponent<Button>().onClick.Invoke(); // Simulation du click sur le bouton Technologie du panel (afin d'afficher les technologies asociées au continent)
-                                                                                                                    // Ne fonctionne pas... je ne sais pas pourquoi. 
-                                                                                                                    //Null reference exception.....
-                                                                                                                    //utiliser la methode onClick.Invoke()
-
-            // ZONE à CORRIGER //
-
-
+            GameManager.instance.panelContinent.SetActive(true);
+            GameObject.Find("IndicatorsButton").GetComponent<Button>().onClick.Invoke();
 
         }
 
