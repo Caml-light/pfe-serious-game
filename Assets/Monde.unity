@@ -530,19 +530,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: .5
       objectReference: {fileID: 0}
-    - target: {fileID: 11435884, guid: e556a84f34828f94fb5550162fc687d7, type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 46f73d626cf58c14a83087ba46859fbc,
-        type: 3}
-    - target: {fileID: 11463410, guid: e556a84f34828f94fb5550162fc687d7, type: 2}
-      propertyPath: m_Text
-      value: "Technologie de r\xE9f\xE9rence"
-      objectReference: {fileID: 0}
-    - target: {fileID: 173796, guid: e556a84f34828f94fb5550162fc687d7, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e556a84f34828f94fb5550162fc687d7, type: 2}
   m_IsPrefabParent: 0
@@ -625,13 +612,17 @@ Prefab:
       propertyPath: m_Pivot.y
       value: .5
       objectReference: {fileID: 0}
-    - target: {fileID: 11472854, guid: 7c96f606057110b40bf962a36306211f, type: 2}
-      propertyPath: m_Text
-      value: "Indicateur de r\xE9f\xE9rence\n"
+    - target: {fileID: 22424838, guid: 7c96f606057110b40bf962a36306211f, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 213
       objectReference: {fileID: 0}
-    - target: {fileID: 184450, guid: 7c96f606057110b40bf962a36306211f, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 22424838, guid: 7c96f606057110b40bf962a36306211f, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.81789995e-08
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424838, guid: 7c96f606057110b40bf962a36306211f, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 114
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c96f606057110b40bf962a36306211f, type: 2}

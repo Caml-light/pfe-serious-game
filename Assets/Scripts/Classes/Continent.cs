@@ -15,7 +15,7 @@ public class Continent : MonoBehaviour
 
     private Animator surbrillance;
 
-    public Continent(string sname, Indicator pop, Indicator foodNeed, Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity,Indicator reseach,Indicator energy, Indicator sickness, Indicator money)
+    public Continent(string sname, Indicator pop, Indicator foodNeed, Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity,Indicator reseach,Indicator energy, Indicator sickness, Indicator money, Indicator happiness)
     {
 
         Debug.Log("contruction du continent : " + sname);
@@ -31,6 +31,7 @@ public class Continent : MonoBehaviour
         Indicators.Add("energy", energy);
         Indicators.Add("sickness", sickness);
         Indicators.Add("money", money);
+        Indicators.Add("happiness", happiness);
 
         Nom = sname;
     }
@@ -41,8 +42,16 @@ public class Continent : MonoBehaviour
         Indicator bufferIndicator;
         if (Indicators.TryGetValue(indicatorName, out bufferIndicator))
         {
-            bufferIndicator.Modifier += modifier;
-            bufferIndicator.Constant += constant;
+            if(indicatorName.Equals("money") || indicatorName.Equals("research"))
+            {
+                bufferIndicator.Modifier += modifier;
+                bufferIndicator.Constant += constant;
+            }
+            else
+            {
+                bufferIndicator.Value += constant;
+            }
+           
         }
 
         Debug.LogFormat("test : {0}, {1}, {2]", Indicators[indicatorName].Modifier, modifier,constant);

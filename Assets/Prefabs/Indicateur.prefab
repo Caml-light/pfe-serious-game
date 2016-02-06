@@ -113,7 +113,7 @@ MonoBehaviour:
     m_MaxSize: 40
     m_Alignment: 4
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 0
@@ -175,9 +175,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Indicateur
-
-'
+  m_Text: "Indicateur de r\xE9f\xE9rence\n"
 --- !u!222 &22228298
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -247,7 +245,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 304.999023, y: -56.4996338}
+  m_AnchoredPosition: {x: 305, y: -56.5}
   m_SizeDelta: {x: 610, y: 63}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22471656
