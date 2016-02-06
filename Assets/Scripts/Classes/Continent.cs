@@ -6,7 +6,7 @@ public class Continent : MonoBehaviour
 {
 
     public float posX;
-    public float posY; // Coorodonées de la caméra zoomée, modifiable depuis l'interface de Unity (pour chaque continent)
+    public float posY; // Coordonnées de la caméra zoomée, modifiable depuis l'interface de Unity (pour chaque continent)
     public float posZoom;
 
     private Dictionary<string, Indicator> _indicators = new Dictionary<string, Indicator>();
@@ -15,7 +15,7 @@ public class Continent : MonoBehaviour
 
     private Animator surbrillance;
 
-    public Continent(string sname, Indicator pop, Indicator foodNeed, Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity)
+    public Continent(string sname, Indicator pop, Indicator foodNeed, Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity,Indicator reseach,Indicator energy, Indicator sickness, Indicator money)
     {
 
         Debug.Log("contruction du continent : " + sname);
@@ -27,23 +27,43 @@ public class Continent : MonoBehaviour
         Indicators.Add("earthQuality", earthQuality);
         Indicators.Add("seaQuality", seaQuality);
         Indicators.Add("biodiversity", biodiversity);
+        Indicators.Add("research", reseach);
+        Indicators.Add("energy", energy);
+        Indicators.Add("sickness", sickness);
+        Indicators.Add("money", money);
 
         Nom = sname;
     }
 
-    public void AddTechnologie(string indicatorName, double modifier)
+    public void AddTechnologie(string indicatorName, double modifier, double constant)
     {
-
         Debug.Log("Continent.AddTechnologie");
         Indicator bufferIndicator;
-        if (Indicators.TryGetValue("foodProd", out bufferIndicator))
+        if (Indicators.TryGetValue(indicatorName, out bufferIndicator))
         {
             bufferIndicator.Modifier += modifier;
+            bufferIndicator.Constant += constant;
         }
 
-        Debug.LogFormat("test : {0}, {1}", Indicators[indicatorName].Modifier, modifier);
+        Debug.LogFormat("test : {0}, {1}, {2]", Indicators[indicatorName].Modifier, modifier,constant);
 
     }
+
+    public void SupprTechnologie(string indicatorName, double modifier, double constant)
+    {
+        Debug.Log("Continent.SupprTechnologie");
+        Indicator bufferIndicator;
+        if (Indicators.TryGetValue(indicatorName, out bufferIndicator))
+        {
+            bufferIndicator.Modifier -= modifier;
+            bufferIndicator.Constant -= constant;
+        }
+
+        Debug.LogFormat("test : {0}, {1}, {2]", Indicators[indicatorName].Modifier, modifier, constant);
+
+    }
+
+
 
 
 

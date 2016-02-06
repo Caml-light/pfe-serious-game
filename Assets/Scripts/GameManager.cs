@@ -104,10 +104,25 @@ public class GameManager : MonoBehaviour
 
         string indicator = Global.instance.unlockedTechnologies[techName].Indicator;
         double modifier = Global.instance.unlockedTechnologies[techName].Modifier;
+        double constant = Global.instance.unlockedTechnologies[techName].Constant;
         string continentName = ContinentSelected.name;
 
         Global.instance.continents[continentName].Technologies[techName]++;
-        Global.instance.continents[continentName].AddTechnologie(indicator, modifier);
+        Global.instance.continents[continentName].AddTechnologie(indicator, modifier,constant);
+    }
+
+
+    public void SupprTechnologie(string techName)
+    {
+        Debug.Log("SupprTechnologie(" + techName + ") sur l'" + ContinentSelected.name + " [GameManager]");
+
+        string indicator = Global.instance.unlockedTechnologies[techName].Indicator;
+        double modifier = Global.instance.unlockedTechnologies[techName].Modifier;
+        double constant = Global.instance.unlockedTechnologies[techName].Constant;
+        string continentName = ContinentSelected.name;
+
+        Global.instance.continents[continentName].Technologies[techName]--;
+        Global.instance.continents[continentName].SupprTechnologie(indicator, modifier, constant);
     }
 
     // Update is called once per frame

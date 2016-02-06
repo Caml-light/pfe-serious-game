@@ -21,14 +21,7 @@ public class Global : MonoBehaviour
     private Text moneyText;
 
 
-
-    Indicator pop = new Indicator("Population", 100.0, 0.99, 50.0, 1.0, "Sprites/pop_totale");
-    Indicator foodNeed = new Indicator("Besoin en nourriture", 100.0, 0.99, 50.0, 1.0, "Sprites/nourriture");
-    Indicator foodProd = new Indicator("Production de nourriture", 100.0, 0.99, 50.0, 1.0, "Sprites/nourriture");
-    Indicator airQuality = new Indicator("Qualité de l'air", 100.0, 0.99, 50.0, 1.0, "Sprites/sante_planete");
-    Indicator earthQuality = new Indicator("Qualité de la terre", 100.0, 0.99, 50.0, 1.0, "Sprites/sante_planete");
-    Indicator seaQuality = new Indicator("Qualité de la mer", 100.0, 0.99, 50.0, 1.0, "Sprites/sante_planete");
-    Indicator biodiversity = new Indicator("Biodiversité", 10000000, 0.99, 10000000, 1.0, "Sprites/sante_planete");
+   
 
 
     void Start()
@@ -40,18 +33,23 @@ public class Global : MonoBehaviour
             globalIndicators.Add("pop", new Info("Population", 0));
             globalIndicators.Add("foodNeed", new Info("Besoin en nourriture", 0));
             globalIndicators.Add("foodProd", new Info("Production de nourriture", 0));
-            globalIndicators.Add("airQuality", new Info("Qualité de l'air", 0));
-            globalIndicators.Add("earthQuality", new Info("Qualité de la terre", 0));
-            globalIndicators.Add("seaQuality", new Info("Qualité de la mer", 0));
+            globalIndicators.Add("earthHealth", new Info("santé de la planete", 0));
             globalIndicators.Add("biodiversity", new Info("Biodiversité", 0));
+            globalIndicators.Add("research", new Info("Recherche", 0));
+            globalIndicators.Add("energy", new Info("Energie", 0));
+            globalIndicators.Add("sickness", new Info("Maladie", 0));
+            globalIndicators.Add("money", new Info("Argent", 0));
 
-            EuropeInitilization();
-            AsiaInitilization();
-            AfricaInitilization();
-            NorthAmericaInitilization();
-            SouthhAmericaInitilization();
-            AustraliaInitilization();
 
+
+            ContinentInit("Europe");
+            ContinentInit("Asie");
+            ContinentInit("Amérique du Nord");
+            ContinentInit("Amérique du Sud");
+            ContinentInit("Océanie");
+            ContinentInit("Afrique");
+
+          
             foreach (KeyValuePair<string, Continent> entry in continents) // ajout des technologies de bases à chaque continent
             {
                 entry.Value.Technologies.Add("Feu", 0);
@@ -71,10 +69,10 @@ public class Global : MonoBehaviour
             UpdateGlobalIndicators();
 
             //definition des technologies
-            unlockedTechnologies.Add("Feu", new Technologie("Feu", 1, 1, "Sprites/feu", "foodProd", 0.015));
-            unlockedTechnologies.Add("Chasse", new Technologie("Chasse", 1, 1, "Sprites/chasse", "foodProd", 0.017));
-            unlockedTechnologies.Add("Pêche", new Technologie("Pêche", 1, 1, "Sprites/pêche", "foodProd", 0.015));
-            unlockedTechnologies.Add("Cueillette", new Technologie("Cueillette", 1, 1, "Sprites/cueillette", "foodProd", 0.010));
+            unlockedTechnologies.Add("Feu", new Technologie("Feu", 1, 1, "Sprites/feu", "energy", 0, 5));
+            unlockedTechnologies.Add("Chasse", new Technologie("Chasse", 1, 1, "Sprites/chasse", "foodProd", 0, 10));
+            unlockedTechnologies.Add("Pêche", new Technologie("Pêche", 1, 1, "Sprites/pêche", "foodProd", 0, 15));
+            unlockedTechnologies.Add("Cueillette", new Technologie("Cueillette", 1, 1, "Sprites/cueillette", "foodProd", 0, 5));
 
         }
         else if (instance != this)
@@ -124,106 +122,97 @@ public class Global : MonoBehaviour
         {
             Debug.LogFormat("{0}", indicatorName);
             indicatorValueBuffer = 0;
-
-
-            foreach (Continent c in continents.Values)
+            if (indicatorName.Equals("earthHealth"))
             {
-                Debug.LogFormat("{0}", c.Nom);
-                success = c.Indicators.TryGetValue(indicatorName, out indicatorBuffer);
-                if (success)
+                double result = 0;
+                double moyTerre = 0;
+                double moyAir = 0;
+                double moyMer = 0;
+
+
+                foreach (Continent c in continents.Values)
                 {
-                    indicatorValueBuffer += indicatorBuffer.Value;
+                    moyTerre += c.Indicators["earthQuality"].Value;
+                    moyAir += c.Indicators["airQuality"].Value;
+                    moyMer += c.Indicators["seaQuality"].Value;
+                }
+                moyTerre = moyTerre / 6;
+                moyMer = moyMer / 6;
+                moyAir = moyAir / 6;
+
+                result = (moyAir + moyMer + moyTerre) / 3;
+                globalIndicators["earthHealth"].Value = result;
+            }
+            else
+            {
+                foreach (Continent c in continents.Values)
+                {
+                    Debug.LogFormat("{0}", c.Nom);
+                    success = c.Indicators.TryGetValue(indicatorName, out indicatorBuffer);
+                    if (success)
+                    {
+                        indicatorValueBuffer += indicatorBuffer.Value;
+                    }
                 }
             }
 
             globalIndicators[indicatorName].Value = indicatorValueBuffer;
         }
 
+        
+
+  
+
         foreach (Info i in globalIndicators.Values)
         {
             switch (i.Name)
             {
-                case "pop":
+                case "Population":
                     popText.text = i.Value.ToString();
                     break;
-
-                case "foodProd":
+                case "Production de nourriture":
                     foodText.text = i.Value.ToString();
+                    break;
+                case "Energie":
+                    energyText.text = i.Value.ToString();
+                    break;
+                case "Maladie":
+                    sickText.text = i.Value.ToString();
+                    break;
+                case "Recherche":
+                    researchText.text = i.Value.ToString();
+                    break;
+                case "Sante de la planete":
+                    earthText.text = i.Value.ToString();
+                    break;
+                case "Argent":
+                    moneyText.text = i.Value.ToString();
                     break;
             }
         }
         Debug.Log("UpdateGlobalIndicators end");
     }
 
-    private void EuropeInitilization()
+    private void ContinentInit(string name)
     {
-        Debug.Log("Initialization of Europe continent start");
+        Debug.Log("Initialization of " + name + " continent start");
 
-        string name = "Europe";
+        Indicator pop = new Indicator("Population", 100.0, "Sprites/pop_totale");
+        Indicator foodNeed = new Indicator("Besoin en nourriture", 100.0, "Sprites/nourriture");
+        Indicator foodProd = new Indicator("Production de nourriture", 100.0, "Sprites/nourriture");
+        Indicator airQuality = new Indicator("Qualité de l'air", 100.0, "Sprites/sante_planete");
+        Indicator earthQuality = new Indicator("Qualité de la terre", 100.0, "Sprites/sante_planete");
+        Indicator seaQuality = new Indicator("Qualité de la mer", 100.0, "Sprites/sante_planete");
+        Indicator biodiversity = new Indicator("Biodiversité", 10000000, "Sprites/sante_planete");
+        Indicator research = new Indicator("Recherche", 0, "Sprites/pop_totale");
+        Indicator energy = new Indicator("Energie", 0,"Sprites/nourriture");
+        Indicator sickness = new Indicator("Maladie", 1, "Sprites/sante_planete");
+        Indicator money = new Indicator("Argent", 20, "Sprites/sante_planete");
+       
 
-        Continent continentEurope = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
+        Continent continent = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity,research,energy,sickness,money);
 
-        Global.instance.continents.Add(name, continentEurope);
-        Debug.Log("Initialization of Europe continent end");
-    }
-
-    private void AsiaInitilization()
-    {
-
-        string name = "Asie";
-        Debug.Log("Initialization of Asia continent start");
-
-        Continent continentAsia = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
-
-        Global.instance.continents.Add(name, continentAsia);
-        Debug.Log("Initialization of Asia continent end");
-    }
-
-    private void NorthAmericaInitilization()
-    {
-
-        string name = "Amérique du Nord";
-        Debug.Log("Initialization of North America continent start");
-
-        Continent continentNA = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
-
-        Global.instance.continents.Add(name, continentNA);
-        Debug.Log("Initialization of North America continent end");
-    }
-
-    private void SouthhAmericaInitilization()
-    {
-
-        string name = "Amérique du Sud";
-        Debug.Log("Initialization of South America continent start");
-
-        Continent continentSA = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
-
-        Global.instance.continents.Add(name, continentSA);
-        Debug.Log("Initialization of South America continent end");
-    }
-
-    private void AfricaInitilization()
-    {
-
-        string name = "Afrique";
-        Debug.Log("Initialization of Africa continent start");
-
-        Continent continentAfrica = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
-
-        Global.instance.continents.Add(name, continentAfrica);
-        Debug.Log("Initialization of Africa continent end");
-    }
-
-    private void AustraliaInitilization()
-    {
-
-        string name = "Océanie";
-        Debug.Log("Initialization of Australia continent start");
-
-        Continent continentAustralia = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity);
-
-        Global.instance.continents.Add(name, continentAustralia);
-        Debug.Log("Initialization of Australia continent end");
+        Global.instance.continents.Add(name, continent);
+        Debug.Log("Initialization of " + name + " continent end");
     }
 }

@@ -11,9 +11,10 @@ public class Technologie : MonoBehaviour
     private string _iconPath;
     private string _indicator;
     private double _modifier;
+    private double _constant;
 
 
-    public Technologie(string name, int cost, int value, string iconPath, string indi, double modifier)
+    public Technologie(string name, int cost, int value, string iconPath, string indi, double modifier, double constant)
     {
 
         _name = name;
@@ -22,9 +23,9 @@ public class Technologie : MonoBehaviour
         _iconPath = iconPath;
         _indicator = indi;
         _modifier = modifier;
+        _constant = constant;
 
         Debug.Log("technologie created");
-
     }
 
     public string Name
@@ -102,6 +103,19 @@ public class Technologie : MonoBehaviour
         set
         {
             _modifier = value;
+        }
+    }
+
+    public double Constant
+    {
+        get
+        {
+            return _constant;
+        }
+
+        set
+        {
+            _constant = value;
         }
     }
 }

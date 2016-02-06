@@ -28,7 +28,6 @@ public class TechnologiesManager : MonoBehaviour
         }
         
         valeur.text = i.ToString();
-      //  GameManager.instance.SupprTechnologie(GameObject.Find(transform.parent.name).transform.Find("TechName").GetComponent<Text>().ToString());
-      // a décommenter après avoir implémenter SupprTechnologie
+        GameManager.instance.SupprTechnologie(GameObject.Find(transform.parent.name).name);
     }
 }
