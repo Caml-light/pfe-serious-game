@@ -11,6 +11,7 @@ public class Global : MonoBehaviour
     public Dictionary<string, Continent> continents = new Dictionary<string, Continent>();
     public Dictionary<string, Info> globalIndicators = new Dictionary<string, Info>();
     public Dictionary<string, Technologie> unlockedTechnologies = new Dictionary<string, Technologie>();
+    public Dictionary<string, CustomEvent> eventsList = new Dictionary<string, CustomEvent>();
 
     private Text foodText;
     private Text energyText;
@@ -86,6 +87,10 @@ public class Global : MonoBehaviour
             unlockedTechnologies.Add("Pesticide", new Technologie("Pesticide", 1, 1, "Sprites/pesticide", "earthQuality", 0, -5));
             unlockedTechnologies.Add("Peche profonde", new Technologie("Peche profonde", 1, 1, "Sprites/peche", "seaQuality", 0, -5));
             unlockedTechnologies.Add("Scierie", new Technologie("Scierie", 1, 1, "Sprites/scierie", "biodiversity", 0, 5));
+
+
+            //definition of the events.
+            eventsList.Add("famine", new EventOnIndicator("Famine", "Il y a famine", "foodProd", 100, 10000, true));
         }
         else if (instance != this)
         {
@@ -117,6 +122,12 @@ public class Global : MonoBehaviour
                 i.UpdateValue();
             }
         }
+
+        foreach(CustomEvent e in eventsList.Values)
+        {
+            e.nextTurn();
+        }
+
         UpdateGlobalIndicators();
     }
 
