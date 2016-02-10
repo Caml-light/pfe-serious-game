@@ -7,7 +7,6 @@ public class EventOnIndicator : CustomEvent
     private int _proba;
     private int _threshold;
     private bool _eventOnThresholdSup;
-    public GUIStyle style;
 
 
     public EventOnIndicator(string name, string textEvent, string indicator, int proba, int threshold, bool isSupp) : base(name, textEvent)
