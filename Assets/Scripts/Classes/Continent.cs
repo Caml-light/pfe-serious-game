@@ -64,8 +64,16 @@ public class Continent : MonoBehaviour
         Indicator bufferIndicator;
         if (Indicators.TryGetValue(indicatorName, out bufferIndicator))
         {
-            bufferIndicator.Modifier -= modifier;
-            bufferIndicator.Constant -= constant;
+            if (indicatorName.Equals("money") || indicatorName.Equals("research"))
+            {
+                bufferIndicator.Modifier -= modifier;
+                bufferIndicator.Constant -= constant;
+            }
+            else
+            {
+                bufferIndicator.Value -= constant;
+            }
+
         }
 
         Debug.LogFormat("test : {0}, {1}, {2}", Indicators[indicatorName].Modifier, modifier, constant);

@@ -25,9 +25,10 @@ public class TechnologiesManager : MonoBehaviour
         if(i>0)
         {
             i--;
+            GameManager.instance.SupprTechnologie(GameObject.Find(transform.parent.name).name);
         }
         
         valeur.text = i.ToString();
-        GameManager.instance.SupprTechnologie(GameObject.Find(transform.parent.name).name);
+        
     }
 }
