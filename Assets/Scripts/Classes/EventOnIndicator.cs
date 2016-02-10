@@ -42,8 +42,8 @@ public class EventOnIndicator : CustomEvent
 
                 if (EventCouldOccur)
                 {
-                    int rnd = getRandom.Next(Proba, 100);
-                    if(rnd == 100)
+                    int rnd = getRandom.Next(0, 100);
+                    if(Proba >= rnd)
                     {
                         // si tu veux afficher quelque chose, c'est ici qu'il faut le brancher
                         Debug.LogFormat( "Event {0} : {1}", Name, TextEvent);

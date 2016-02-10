@@ -90,7 +90,7 @@ public class Global : MonoBehaviour
 
 
             //definition of the events.
-            eventsList.Add("famine", new EventOnIndicator("Famine", "Il y a famine", "foodProd", 100, 10000, true));
+            eventsList.Add("famine", new EventOnIndicator("Famine", "Il y a famine", "foodProd", 10, 100, false));
         }
         else if (instance != this)
         {
