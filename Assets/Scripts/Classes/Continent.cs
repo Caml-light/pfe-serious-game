@@ -54,7 +54,7 @@ public class Continent : MonoBehaviour
            
         }
 
-        Debug.LogFormat("test : {0}, {1}, {2]", Indicators[indicatorName].Modifier, modifier,constant);
+        Debug.LogFormat("test : {0}, {1}, {2}", Indicators[indicatorName].Modifier, modifier,constant);
 
     }
 
@@ -68,7 +68,7 @@ public class Continent : MonoBehaviour
             bufferIndicator.Constant -= constant;
         }
 
-        Debug.LogFormat("test : {0}, {1}, {2]", Indicators[indicatorName].Modifier, modifier, constant);
+        Debug.LogFormat("test : {0}, {1}, {2}", Indicators[indicatorName].Modifier, modifier, constant);
 
     }
 
