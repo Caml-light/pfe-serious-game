@@ -50,7 +50,7 @@ public class Global : MonoBehaviour
             foreach (KeyValuePair<string, Continent> entry in continents) // ajout des technologies de bases à chaque continent
             {
                 entry.Value.Technologies.Add("Feu", 0);
-                entry.Value.Technologies.Add("Chasse", 0);
+               // entry.Value.Technologies.Add("Chasse", 0);
                 entry.Value.Technologies.Add("Cueillette", 0);
                 entry.Value.Technologies.Add("Ecole", 0);
                 entry.Value.Technologies.Add("Banque", 0);
@@ -72,8 +72,8 @@ public class Global : MonoBehaviour
             UpdateGlobalIndicators();
 
             //definition des technologies
-            unlockedTechnologies.Add("Feu", new Technologie("Feu", 1, 1, "Sprites/feu", "energy", 0, 5));
-            unlockedTechnologies.Add("Chasse", new Technologie("Chasse", 1, 1, "Sprites/chasse", "foodProd", 0, 10000));
+            unlockedTechnologies.Add("Feu", new Technologie("Feu", 1, 1, "Sprites/feu", "energyProd", 0, 5));
+          //  unlockedTechnologies.Add("Chasse", new Technologie("Chasse", 1, 1, "Sprites/chasse", "foodProd", 0, 10000));
             unlockedTechnologies.Add("Pêche", new Technologie("Pêche", 1, 1, "Sprites/pêche", "foodProd", 0, 15));
             unlockedTechnologies.Add("Cueillette", new Technologie("Cueillette", 1, 1, "Sprites/cueillette", "foodProd", 0, 5));
             unlockedTechnologies.Add("Ecole", new Technologie("Ecole", 1, 1, "Sprites/école", "researchProd", 0, 5));
