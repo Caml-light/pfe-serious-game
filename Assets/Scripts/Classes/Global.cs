@@ -12,6 +12,7 @@ public class Global : MonoBehaviour
     public Dictionary<string, Info> globalIndicators = new Dictionary<string, Info>();
     public Dictionary<string, Technologie> unlockedTechnologies = new Dictionary<string, Technologie>();
     public Dictionary<string, CustomEvent> eventsList = new Dictionary<string, CustomEvent>();
+    public List<EventOnIndicator> eventsOccurringList = new List<EventOnIndicator>();
 
     private Text foodText;
     private Text energyText;
@@ -20,10 +21,6 @@ public class Global : MonoBehaviour
     private Text sickText;
     private Text earthText;
     private Text moneyText;
-
-
-   
-
 
     void Start()
     {
@@ -40,7 +37,6 @@ public class Global : MonoBehaviour
             globalIndicators.Add("energy", new Info("Energie", 0));
             globalIndicators.Add("sickness", new Info("Maladie", 0));
             globalIndicators.Add("money", new Info("Argent", 0));
-
 
 
             ContinentInit("Europe");
@@ -80,17 +76,18 @@ public class Global : MonoBehaviour
             unlockedTechnologies.Add("Chasse", new Technologie("Chasse", 1, 1, "Sprites/chasse", "foodProd", 0, 10));
             unlockedTechnologies.Add("Pêche", new Technologie("Pêche", 1, 1, "Sprites/pêche", "foodProd", 0, 15));
             unlockedTechnologies.Add("Cueillette", new Technologie("Cueillette", 1, 1, "Sprites/cueillette", "foodProd", 0, 5));
-            unlockedTechnologies.Add("Ecole", new Technologie("Ecole", 1, 1, "Sprites/ecole", "research", 0, 5));
-            unlockedTechnologies.Add("Banque", new Technologie("Banque", 1, 1, "Sprites/banque", "money", 0, 5));
+            unlockedTechnologies.Add("Ecole", new Technologie("Ecole", 1, 1, "Sprites/école", "researchProd", 0, 5));
+            unlockedTechnologies.Add("Banque", new Technologie("Banque", 1, 1, "Sprites/banque", "moneyProd", 0, 5));
             unlockedTechnologies.Add("Cabane", new Technologie("Cabane", 1, 1, "Sprites/cabane", "pop", 0, 5));
             unlockedTechnologies.Add("Charbon", new Technologie("Charbon", 1, 1, "Sprites/charbon", "airQuality", 0, -5));
-            unlockedTechnologies.Add("Pesticide", new Technologie("Pesticide", 1, 1, "Sprites/pesticide", "earthQuality", 0, -5));
-            unlockedTechnologies.Add("Peche profonde", new Technologie("Peche profonde", 1, 1, "Sprites/peche", "seaQuality", 0, -5));
-            unlockedTechnologies.Add("Scierie", new Technologie("Scierie", 1, 1, "Sprites/scierie", "biodiversity", 0, 5));
+            unlockedTechnologies.Add("Pesticide", new Technologie("Pesticide", 1, 1, "Sprites/pesticides", "earthQuality", 0, -5));
+            unlockedTechnologies.Add("Peche profonde", new Technologie("Peche profonde", 1, 1, "Sprites/pêche_profonde", "seaQuality", 0, -5));
+            unlockedTechnologies.Add("Scierie", new Technologie("Scierie", 1, 1, "Sprites/scierie", "forest", 0, 5));
 
 
             //definition of the events.
-            eventsList.Add("famine", new EventOnIndicator("Famine", "Il y a famine", "foodProd", 10, 100, false));
+            eventsList.Add("Famine", new EventOnIndicator("Famine", "La famine sévit en ", "Sprites/Famine", "foodProd", 10, 100, false));
+            eventsList.Add("Tsunami", new EventOnIndicator("Tsunami", "Un Tsunami ravage\nles côtes d'", "Sprites/Tsunami", "pop", 50, 100, false));
         }
         else if (instance != this)
         {
@@ -115,6 +112,7 @@ public class Global : MonoBehaviour
     public void nextTurn()
     {
         Debug.Log("NextTurn Global.cs");
+        
         foreach (Continent c in continents.Values)
         {
             foreach (Indicator i in c.Indicators.Values)
@@ -123,7 +121,8 @@ public class Global : MonoBehaviour
             }
         }
 
-        foreach(CustomEvent e in eventsList.Values)
+        eventsOccurringList.Clear();
+        foreach (CustomEvent e in eventsList.Values)
         {
             e.nextTurn();
         }
@@ -147,7 +146,6 @@ public class Global : MonoBehaviour
             indicatorValueBuffer = 0;
             if (indicatorName.Equals("earthHealth"))
             {
-                Debug.Log("C EST RIGOLO DE TUER LA PLANETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                 double result = 0;
                 double moyTerre = 0;
                 double moyAir = 0;
@@ -186,10 +184,6 @@ public class Global : MonoBehaviour
             globalIndicators[indicatorName].Value = indicatorValueBuffer;
         }
 
-        
-
-  
-
         foreach (Info i in globalIndicators.Values)
         {
             switch (i.Name)
@@ -220,25 +214,12 @@ public class Global : MonoBehaviour
         Debug.Log("UpdateGlobalIndicators end");
     }
 
+
     private void ContinentInit(string name)
     {
         Debug.Log("Initialization of " + name + " continent start");
 
-        Indicator pop = new Indicator("Population", 100.0, "Sprites/pop_totale");
-        Indicator foodNeed = new Indicator("Besoin en nourriture", 100.0, "Sprites/nourriture");
-        Indicator foodProd = new Indicator("Production de nourriture", 100.0, "Sprites/nourriture");
-        Indicator airQuality = new Indicator("Qualité de l'air", 100.0, "Sprites/sante_planete");
-        Indicator earthQuality = new Indicator("Qualité de la terre", 100.0, "Sprites/sante_planete");
-        Indicator seaQuality = new Indicator("Qualité de la mer", 100.0, "Sprites/sante_planete");
-        Indicator biodiversity = new Indicator("Biodiversité", 10000000, "Sprites/sante_planete");
-        Indicator research = new Indicator("Recherche", 0, "Sprites/recherche");
-        Indicator energy = new Indicator("Energie", 0,"Sprites/energie");
-        Indicator sickness = new Indicator("Maladie", 1, "Sprites/pop_malade");
-        Indicator money = new Indicator("Argent", 20, "Sprites/argent");
-        Indicator happiness = new Indicator("Bonheur", 0, "Sprites/bonheur");
-
-
-        Continent continent = new Continent(name, pop, foodNeed, foodProd, airQuality, earthQuality, seaQuality, biodiversity,research,energy,sickness,money,happiness);
+        Continent continent = new Continent(name);
 
         Global.instance.continents.Add(name, continent);
         Debug.Log("Initialization of " + name + " continent end");

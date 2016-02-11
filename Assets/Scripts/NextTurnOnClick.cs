@@ -15,8 +15,8 @@ public class NextTurnOnClick : MonoBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log("Je te clique dans la geule");
         GameManager.instance.nextTurn();
+
     }
 
 }

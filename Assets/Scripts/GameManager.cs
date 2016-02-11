@@ -26,7 +26,17 @@ public class GameManager : MonoBehaviour
 
 
     public GameObject panelContinent;
+    public GameObject panelEvents;
     private GameObject barreIcones;
+
+    private GameObject europe;
+    private GameObject asie;
+    private GameObject amerique_nord;
+    private GameObject amerique_sud;
+    private GameObject afrique;
+    private GameObject oceanie;
+    private GameObject next_turn_button;
+
     private Text foodText;
     private Text energyText;
     private Text researchText;
@@ -70,6 +80,15 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("GM start");
 
+
+        amerique_nord = GameObject.Find("Amérique du Nord");
+        amerique_sud = GameObject.Find("Amérique du Sud");
+        asie = GameObject.Find("Asie");
+        europe = GameObject.Find("Europe");
+        oceanie = GameObject.Find("Océanie");
+        afrique = GameObject.Find("Afrique");
+        next_turn_button = GameObject.Find("NextTurn_Button");
+
         foodText = GameObject.Find("globalTextFood").GetComponent<Text>();
         moneyText = GameObject.Find("globalTextMoney").GetComponent<Text>();
         energyText = GameObject.Find("globalTextEnergy").GetComponent<Text>();
@@ -89,6 +108,8 @@ public class GameManager : MonoBehaviour
         barreIcones = GameObject.Find("BarreHaut");
         panelContinent = GameObject.Find("PanelContinent");
         panelContinent.SetActive(false);
+        panelEvents = GameObject.Find("PanelEvents");
+        panelEvents.SetActive(false);
 
     }
 
@@ -96,6 +117,26 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("nextTurn GM");
         Global.instance.nextTurn();
+        panelEvents.SetActive(true);
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Continent"))
+        {
+            obj.SetActive(false);
+        }
+
+        GameObject.Find("ActualisationEventsButton").GetComponent<Button>().onClick.Invoke();
+    }
+
+    public void closeEventPanel()
+    {
+        panelEvents.SetActive(false);
+        amerique_nord.SetActive(true);
+        amerique_sud.SetActive(true);
+        asie.SetActive(true);
+        europe.SetActive(true);
+        oceanie.SetActive(true);
+        afrique.SetActive(true);
+        next_turn_button.SetActive(true);
     }
 
     public void AddTechnologie(string techName)

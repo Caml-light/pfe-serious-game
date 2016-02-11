@@ -8,8 +8,7 @@ public class EventOnIndicator : CustomEvent
     private int _threshold;
     private bool _eventOnThresholdSup;
 
-
-    public EventOnIndicator(string name, string textEvent, string indicator, int proba, int threshold, bool isSupp) : base(name, textEvent)
+    public EventOnIndicator(string name, string textEvent, string imagepath, string indicator, int proba, int threshold, bool isSupp) : base(name, textEvent, imagepath)
     {
         _indicatorName = indicator;
         _proba = proba;
@@ -24,6 +23,7 @@ public class EventOnIndicator : CustomEvent
         Debug.Log("__________________________________________________________\n\n\n");
 
         bool EventCouldOccur = false;
+        string texteventtemp = TextEvent;
         foreach (Continent continent in Global.instance.continents.Values)
         {
             Indicator buffer;
@@ -44,8 +44,10 @@ public class EventOnIndicator : CustomEvent
                     int rnd = getRandom.Next(0, 100);
                     if(Proba >= rnd)
                     {
-                        // si tu veux afficher quelque chose, c'est ici qu'il faut le brancher
-                        Debug.LogFormat( "Event {0} : {1}", Name, TextEvent);
+                        TextEvent += continent.Nom;
+                        Global.instance.eventsOccurringList.Add((EventOnIndicator)MemberwiseClone());
+                        TextEvent = texteventtemp;
+                        Debug.LogFormat( "Event {0} : {1} Continent : {2}", Name, TextEvent, continent.Nom);
                     }
                     else
                     {

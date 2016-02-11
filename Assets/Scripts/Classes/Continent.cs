@@ -15,23 +15,65 @@ public class Continent : MonoBehaviour
 
     private Animator surbrillance;
 
-    public Continent(string sname, Indicator pop, Indicator foodNeed, Indicator foodProd, Indicator airQuality, Indicator earthQuality, Indicator seaQuality, Indicator biodiversity,Indicator reseach,Indicator energy, Indicator sickness, Indicator money, Indicator happiness)
+    public Continent(string sname)
     {
 
         Debug.Log("contruction du continent : " + sname);
 
+
+        Indicator pop = new Indicator("Population", 100000.0, "Sprites/pop_totale");
+        Indicator sickness = new Indicator("Population Malade (%)", 1, "Sprites/pop_malade");
+
+        Indicator lifeQuality = new Indicator("Niveau de Vie", 1, "Sprites/niveau_vie");
+        Indicator knowledge = new Indicator("Savoir", 1, "Sprites/savoir");
+        Indicator happiness = new Indicator("Bonheur", 0, "Sprites/bonheur");
+
+        Indicator foodNeed = new Indicator("Besoin en nourriture", 100.0, "Sprites/besoin_nourriture");
+        Indicator foodProd = new Indicator("Production de nourriture", 100.0, "Sprites/nourriture+");
+
+        Indicator money = new Indicator("Argent", 20, "Sprites/argent");
+        Indicator moneyProd = new Indicator("Revenus", 20, "Sprites/argent+");
+        Indicator moneyNeed = new Indicator("Besoin économique", 20, "Sprites/besoin_eco");
+
+        Indicator energyProd = new Indicator("Production d'énergie", 0, "Sprites/energie"); //nergie+
+        Indicator energyNeed = new Indicator("Besoin énergetique", 0, "Sprites/besoin_energie"); 
+
+        Indicator researchProd = new Indicator("Recherche", 0, "Sprites/recherche+");
+
+        Indicator airQuality = new Indicator("Qualité de l'air (%)", 100.0, "Sprites/qualité_air");
+        Indicator earthQuality = new Indicator("Qualité de la terre (%)", 100.0, "Sprites/qualité_terre");
+        Indicator seaQuality = new Indicator("Qualité de la mer (%)", 100.0, "Sprites/qualité_mer");
+
+        Indicator forest = new Indicator("Biodiversité végétale", 100000.0, "Sprites/foret");
+        Indicator animals = new Indicator("Biodiversité terrestre", 10000.0, "Sprites/faune_terrestre");
+        Indicator submarines = new Indicator("Biodiversité marine", 10000.0, "Sprites/faune_marine");
+
         Indicators.Add("pop", pop);
+        Indicators.Add("sickness", sickness);
+
+        Indicators.Add("lifeQuality", lifeQuality);
+        Indicators.Add("knowledge", knowledge);
+        Indicators.Add("happiness", happiness);
+
         Indicators.Add("foodNeed", foodNeed);
         Indicators.Add("foodProd", foodProd);
+
+        Indicators.Add("money", money);
+        Indicators.Add("moneyProd", moneyProd);
+        Indicators.Add("moneyNeed", moneyNeed);
+
+        Indicators.Add("energyProd", energyProd);
+        Indicators.Add("energyNeed", energyNeed);
+
+        Indicators.Add("researchProd", researchProd);
+
         Indicators.Add("airQuality", airQuality);
         Indicators.Add("earthQuality", earthQuality);
         Indicators.Add("seaQuality", seaQuality);
-        Indicators.Add("biodiversity", biodiversity);
-        Indicators.Add("research", reseach);
-        Indicators.Add("energy", energy);
-        Indicators.Add("sickness", sickness);
-        Indicators.Add("money", money);
-        Indicators.Add("happiness", happiness);
+
+        Indicators.Add("forest", forest);
+        Indicators.Add("animals", animals);
+        Indicators.Add("submarines", submarines);
 
         Nom = sname;
     }
@@ -42,7 +84,7 @@ public class Continent : MonoBehaviour
         Indicator bufferIndicator;
         if (Indicators.TryGetValue(indicatorName, out bufferIndicator))
         {
-            if(indicatorName.Equals("money") || indicatorName.Equals("research"))
+            if(indicatorName.Equals("money"))
             {
                 bufferIndicator.Modifier += modifier;
                 bufferIndicator.Constant += constant;
@@ -64,7 +106,7 @@ public class Continent : MonoBehaviour
         Indicator bufferIndicator;
         if (Indicators.TryGetValue(indicatorName, out bufferIndicator))
         {
-            if (indicatorName.Equals("money") || indicatorName.Equals("research"))
+            if (indicatorName.Equals("money"))
             {
                 bufferIndicator.Modifier -= modifier;
                 bufferIndicator.Constant -= constant;
