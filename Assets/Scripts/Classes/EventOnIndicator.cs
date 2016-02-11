@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
+
 public class EventOnIndicator : CustomEvent
 {
     private string _indicatorName;
@@ -8,7 +8,7 @@ public class EventOnIndicator : CustomEvent
     private int _threshold;
     private bool _eventOnThresholdSup;
 
-    public EventOnIndicator(string name, string textEvent, string imagepath, string indicator, int proba, int threshold, bool isSupp) : base(name, textEvent, imagepath)
+    public EventOnIndicator(string name, string textEvent, string imagepath, string indicator, int proba, int threshold, bool isSupp, string influenced, float percent) : base(name, textEvent, imagepath, influenced, percent)
     {
         _indicatorName = indicator;
         _proba = proba;
@@ -44,6 +44,9 @@ public class EventOnIndicator : CustomEvent
                     int rnd = getRandom.Next(0, 100);
                     if(Proba >= rnd)
                     {
+
+                        continent.Indicators[Influenced_indic].Value = Math.Truncate(continent.Indicators[Influenced_indic].Value * Percentage);
+                        
                         TextEvent += continent.Nom;
                         Global.instance.eventsOccurringList.Add((EventOnIndicator)MemberwiseClone());
                         TextEvent = texteventtemp;

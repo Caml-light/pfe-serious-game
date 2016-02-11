@@ -12,7 +12,7 @@ public class Global : MonoBehaviour
     public Dictionary<string, Info> globalIndicators = new Dictionary<string, Info>();
     public Dictionary<string, Technologie> unlockedTechnologies = new Dictionary<string, Technologie>();
     public Dictionary<string, CustomEvent> eventsList = new Dictionary<string, CustomEvent>();
-    public List<EventOnIndicator> eventsOccurringList = new List<EventOnIndicator>();
+    public List<CustomEvent> eventsOccurringList = new List<CustomEvent>();
 
     private Text foodText;
     private Text energyText;
@@ -46,7 +46,7 @@ public class Global : MonoBehaviour
             ContinentInit("Océanie");
             ContinentInit("Afrique");
 
-          
+
             foreach (KeyValuePair<string, Continent> entry in continents) // ajout des technologies de bases à chaque continent
             {
                 entry.Value.Technologies.Add("Feu", 0);
@@ -73,7 +73,7 @@ public class Global : MonoBehaviour
 
             //definition des technologies
             unlockedTechnologies.Add("Feu", new Technologie("Feu", 1, 1, "Sprites/feu", "energy", 0, 5));
-            unlockedTechnologies.Add("Chasse", new Technologie("Chasse", 1, 1, "Sprites/chasse", "foodProd", 0, 10));
+            unlockedTechnologies.Add("Chasse", new Technologie("Chasse", 1, 1, "Sprites/chasse", "foodProd", 0, 10000));
             unlockedTechnologies.Add("Pêche", new Technologie("Pêche", 1, 1, "Sprites/pêche", "foodProd", 0, 15));
             unlockedTechnologies.Add("Cueillette", new Technologie("Cueillette", 1, 1, "Sprites/cueillette", "foodProd", 0, 5));
             unlockedTechnologies.Add("Ecole", new Technologie("Ecole", 1, 1, "Sprites/école", "researchProd", 0, 5));
@@ -86,8 +86,10 @@ public class Global : MonoBehaviour
 
 
             //definition of the events.
-            eventsList.Add("Famine", new EventOnIndicator("Famine", "La famine sévit en ", "Sprites/Famine", "foodProd", 10, 100, false));
-            eventsList.Add("Tsunami", new EventOnIndicator("Tsunami", "Un Tsunami ravage\nles côtes d'", "Sprites/Tsunami", "pop", 50, 100, false));
+            // Nom - description - path de l'image - indicateur trigger - proba - seuil - seuil à atteidre pour déclencher (vrai nou faux) - indacateur influencé - pourcentage à appliquer
+            eventsList.Add("Famine", new EventOnIndicator("Famine", "La famine sévit en ", "Sprites/famine", "foodProd", 100, 50000, true, "pop", 0.8f));
+            eventsList.Add("Tsunami", new EventOnIndicator("Tsunami", "Un Tsunami ravage\nles côtes d'", "Sprites/tsunami", "pop", 5, 100, false, "pop", 0.95f));
+            eventsList.Add("Extinction du Mammouth", new EventOnTech("Extinction du Mammouth", "Le Mammouth s'éteint en ", "Sprites/mammouth", "Chasse", 100, 10, false, "animals", 0.999f));
         }
         else if (instance != this)
         {
@@ -112,13 +114,14 @@ public class Global : MonoBehaviour
     public void nextTurn()
     {
         Debug.Log("NextTurn Global.cs");
-        
+
         foreach (Continent c in continents.Values)
         {
             foreach (Indicator i in c.Indicators.Values)
             {
                 i.UpdateValue();
             }
+            c.Indicators["money"].Value = c.Indicators["money"].Value + c.Indicators["moneyProd"].Value - c.Indicators["moneyNeed"].Value;
         }
 
         eventsOccurringList.Clear();
@@ -142,8 +145,16 @@ public class Global : MonoBehaviour
 
         foreach (string indicatorName in globalIndicators.Keys)
         {
-            Debug.LogFormat("{0}", indicatorName);
             indicatorValueBuffer = 0;
+
+            if (indicatorName.Equals("research"))
+            {
+                foreach (Continent c in continents.Values)
+                {
+                    globalIndicators[indicatorName].Value += c.Indicators["researchProd"].Value;
+                }
+            }
+
             if (indicatorName.Equals("earthHealth"))
             {
                 double result = 0;
@@ -164,19 +175,21 @@ public class Global : MonoBehaviour
 
                 result = (moyAir + moyMer + moyTerre) / 3;
 
-               
+
                 globalIndicators["earthHealth"].Value = result;
-                Debug.Log(globalIndicators["earthHealth"].Value);
             }
             else
             {
                 foreach (Continent c in continents.Values)
                 {
-                    Debug.LogFormat("{0}", c.Nom);
                     success = c.Indicators.TryGetValue(indicatorName, out indicatorBuffer);
                     if (success)
                     {
                         indicatorValueBuffer += indicatorBuffer.Value;
+                    }
+                    else if(indicatorName.Equals("research"))
+                    {
+                        indicatorValueBuffer = globalIndicators["research"].Value;
                     }
                 }
             }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Classes;
 
-public class Technologie : MonoBehaviour
+public class Technologie
 {
     private string _name;
     private int _cost; // money the technologie cost

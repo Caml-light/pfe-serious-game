@@ -47,7 +47,7 @@ public class GrilleEvents : MonoBehaviour
         if (Global.instance.eventsOccurringList.Count > 0)
         {
             eventprefabricated.SetActive(true);
-            foreach (EventOnIndicator eventoccurring in Global.instance.eventsOccurringList)
+            foreach (CustomEvent eventoccurring in Global.instance.eventsOccurringList)
             {
                 cpt++;
                 newEvent = (GameObject)Instantiate(eventprefabricated, eventprefabricated.transform.position, Quaternion.identity);
